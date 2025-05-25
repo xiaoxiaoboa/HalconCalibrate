@@ -1,4 +1,4 @@
-﻿using HalconCalibration.Enum;
+﻿using HalconCalibration.Enums;
 using HalconCalibration.Interface;
 
 namespace HalconCalibration.Common

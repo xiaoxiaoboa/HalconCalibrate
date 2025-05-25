@@ -1,4 +1,4 @@
-﻿namespace HalconCalibration.Enum;
+﻿namespace HalconCalibration.Enums;
 
 public enum LogLevel
 {

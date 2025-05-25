@@ -8,7 +8,7 @@ public partial class Main : Form
 {
     private HWindow _window;
 
-    HImage image = new();
+    private HImage _image = new();
 
     private double _scale = 1.0;
     private double _zoomFactor = 1.1;
@@ -41,15 +41,14 @@ public partial class Main : Form
     // 相机连接
     private void connectCamera_Click(object sender, EventArgs e)
     {
-        var msg = CameraCtrl.Instance.Connect();
-        if (msg == null)
+        if (CameraCtrl.Instance.Connect(out var msg))
         {
             connectCamera.BackColor = Color.LimeGreen;
             Logger.Instance.AddLog("相机连接成功");
         }
         else
         {
-            Logger.Instance.AddLog(msg);
+            Logger.Instance.AddLog($"相机连接失败：{msg}");
         }
     }
 
@@ -59,8 +58,8 @@ public partial class Main : Form
     {
         try
         {
-            image = CameraCtrl.Instance.TakeGraphic();
-            image.DispObj(_window);
+            _image = CameraCtrl.Instance.TakeGraphic();
+            _image.DispObj(_window);
         }
         catch (Exception exception)
         {
@@ -72,6 +71,7 @@ public partial class Main : Form
     {
         var logs = new Logs();
         logs.Show();
+        
     }
 
     private void connectPlc_Click(object sender, EventArgs e)

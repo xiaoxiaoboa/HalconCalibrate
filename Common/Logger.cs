@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Text;
-using HalconCalibration.Enum;
+using HalconCalibration.Enums;
 using HalconCalibration.Interface;
 using Microsoft.VisualBasic.Logging;
 

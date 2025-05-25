@@ -45,12 +45,14 @@ partial class Main
         displayLogs = new Button();
         takeGraphic = new Button();
         groupBox2 = new GroupBox();
+        calibration1 = new HalconCalibration.Views.HalconProjects.Calibration();
         menuStrip1.SuspendLayout();
         panel1.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         tableLayoutPanel2.SuspendLayout();
         groupBox1.SuspendLayout();
         tableLayoutPanel3.SuspendLayout();
+        groupBox2.SuspendLayout();
         SuspendLayout();
         // 
         // menuStrip1
@@ -133,14 +135,13 @@ partial class Main
         // tableLayoutPanel2
         // 
         tableLayoutPanel2.ColumnCount = 1;
-        tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 53.6290321F));
-        tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle());
+        tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         tableLayoutPanel2.Controls.Add(groupBox1, 0, 0);
         tableLayoutPanel2.Controls.Add(groupBox2, 0, 1);
         tableLayoutPanel2.Dock = DockStyle.Fill;
         tableLayoutPanel2.Location = new Point(3, 3);
         tableLayoutPanel2.Name = "tableLayoutPanel2";
-        tableLayoutPanel2.RowCount = 3;
+        tableLayoutPanel2.RowCount = 2;
         tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 28.333334F));
         tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 71.6666641F));
         tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
@@ -153,7 +154,7 @@ partial class Main
         groupBox1.Dock = DockStyle.Fill;
         groupBox1.Location = new Point(3, 3);
         groupBox1.Name = "groupBox1";
-        groupBox1.Size = new Size(318, 147);
+        groupBox1.Size = new Size(318, 152);
         groupBox1.TabIndex = 1;
         groupBox1.TabStop = false;
         groupBox1.Text = "程序操作";
@@ -173,7 +174,7 @@ partial class Main
         tableLayoutPanel3.RowCount = 2;
         tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333359F));
         tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333359F));
-        tableLayoutPanel3.Size = new Size(312, 121);
+        tableLayoutPanel3.Size = new Size(312, 126);
         tableLayoutPanel3.TabIndex = 0;
         // 
         // connectCamera
@@ -181,7 +182,7 @@ partial class Main
         connectCamera.Dock = DockStyle.Fill;
         connectCamera.Location = new Point(3, 3);
         connectCamera.Name = "connectCamera";
-        connectCamera.Size = new Size(150, 54);
+        connectCamera.Size = new Size(150, 57);
         connectCamera.TabIndex = 0;
         connectCamera.Text = "连接相机";
         connectCamera.UseVisualStyleBackColor = true;
@@ -192,7 +193,7 @@ partial class Main
         connectPlc.Dock = DockStyle.Fill;
         connectPlc.Location = new Point(159, 3);
         connectPlc.Name = "connectPlc";
-        connectPlc.Size = new Size(150, 54);
+        connectPlc.Size = new Size(150, 57);
         connectPlc.TabIndex = 1;
         connectPlc.Text = "连接PLC";
         connectPlc.UseVisualStyleBackColor = true;
@@ -201,9 +202,9 @@ partial class Main
         // displayLogs
         // 
         displayLogs.Dock = DockStyle.Fill;
-        displayLogs.Location = new Point(3, 63);
+        displayLogs.Location = new Point(3, 66);
         displayLogs.Name = "displayLogs";
-        displayLogs.Size = new Size(150, 55);
+        displayLogs.Size = new Size(150, 57);
         displayLogs.TabIndex = 4;
         displayLogs.Text = "显示日志";
         displayLogs.UseVisualStyleBackColor = true;
@@ -212,9 +213,9 @@ partial class Main
         // takeGraphic
         // 
         takeGraphic.Dock = DockStyle.Fill;
-        takeGraphic.Location = new Point(159, 63);
+        takeGraphic.Location = new Point(159, 66);
         takeGraphic.Name = "takeGraphic";
-        takeGraphic.Size = new Size(150, 55);
+        takeGraphic.Size = new Size(150, 57);
         takeGraphic.TabIndex = 5;
         takeGraphic.Text = "拍照";
         takeGraphic.UseVisualStyleBackColor = true;
@@ -222,13 +223,22 @@ partial class Main
         // 
         // groupBox2
         // 
+        groupBox2.Controls.Add(calibration1);
         groupBox2.Dock = DockStyle.Fill;
-        groupBox2.Location = new Point(3, 156);
+        groupBox2.Location = new Point(3, 161);
         groupBox2.Name = "groupBox2";
-        groupBox2.Size = new Size(318, 381);
+        groupBox2.Size = new Size(318, 397);
         groupBox2.TabIndex = 2;
         groupBox2.TabStop = false;
         groupBox2.Text = "项目配置";
+        // 
+        // calibration1
+        // 
+        calibration1.Dock = DockStyle.Fill;
+        calibration1.Location = new Point(3, 23);
+        calibration1.Name = "calibration1";
+        calibration1.Size = new Size(312, 371);
+        calibration1.TabIndex = 0;
         // 
         // Main
         // 
@@ -248,9 +258,12 @@ partial class Main
         tableLayoutPanel2.ResumeLayout(false);
         groupBox1.ResumeLayout(false);
         tableLayoutPanel3.ResumeLayout(false);
+        groupBox2.ResumeLayout(false);
         ResumeLayout(false);
         PerformLayout();
     }
+
+    private HalconCalibration.Views.HalconProjects.Calibration calibration1;
 
     private System.Windows.Forms.Button takeGraphic;
 
@@ -280,6 +293,6 @@ partial class Main
 
     private ToolStripMenuItem projects;
     private GroupBox groupBox1;
-    private GroupBox groupBox2;
+    private System.Windows.Forms.GroupBox groupBox2;
     private ToolStripMenuItem ninePointCalib;
 }
