@@ -414,6 +414,7 @@ partial class Calibration
         stopListen.TabIndex = 0;
         stopListen.Text = "停止监听";
         stopListen.UseVisualStyleBackColor = true;
+        stopListen.Click += stopListen_Click;
         // 
         // panel2
         // 
@@ -548,5 +549,5 @@ partial class Calibration
     private Panel panel6;
     private System.Windows.Forms.Button listenPlc;
     private Panel panel7;
-    private Button stopListen;
+    private System.Windows.Forms.Button stopListen;
 }

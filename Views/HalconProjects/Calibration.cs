@@ -170,9 +170,16 @@ public partial class Calibration : UserControl
     }
 
 
+    // 开启监听
     private void listenPlc_Click(object sender, EventArgs e)
     {
         PlcControl.Instance.StartListener(1000, OnPlcListening);
+    }
+
+    // 停止监听
+    private void stopListen_Click(object sender, EventArgs e)
+    {
+        PlcControl.Instance.StopListener();
     }
 
     private async Task OnPlcListening()
