@@ -4,6 +4,7 @@ using System.Globalization;
 using HalconCalibration.Common;
 using HalconCalibration.Enums;
 using HalconDotNet;
+using S7.Net;
 
 namespace HalconCalibration.Views.HalconProjects;
 
@@ -20,6 +21,13 @@ public partial class Calibration : UserControl
 
     private string Feature { get; set; } = nameof(SelectShapeFeatures.area);
     private string Operator { get; set; } = nameof(SelectShapeOperation.and);
+
+    private readonly HTuple _pixelRow = new();
+    private readonly HTuple _pixelColumn = new();
+
+    private readonly HTuple _realRow = new();
+    private readonly HTuple _realColumn = new();
+
 
     public Calibration(HWindow hWindow)
     {
@@ -53,18 +61,31 @@ public partial class Calibration : UserControl
             HRegion thresholdRegion = grayImage.Threshold(ThresholdMin, ThresholdMax);
             HRegion connectionRegion = thresholdRegion.Connection();
             HRegion selectRegion = connectionRegion.SelectShape(Feature, Operator, SelectShapeMin, SelectShapeMax);
-            HTuple area = selectRegion.AreaCenter(out HTuple row, out HTuple column);
+            selectRegion.AreaCenter(out HTuple row, out HTuple column);
 
             _window.ClearWindow();
             grayImage.DispObj(_window);
             selectRegion.DispObj(_window);
 
             Logger.Instance.AddLog("图像处理完成");
+
+            // 保存像素坐标
+            _pixelRow.Append(row);
+            _pixelColumn.Append(column);
+
+            if (PlcControl.Instance.NineCaliNum == 9)
+            {
+                CameraCtrl.Instance.HomMat2D.VectorToHomMat2d(_pixelRow, _pixelColumn, _realRow, _realColumn);
+
+                PlcControl.Instance.StopListener();
+
+                Logger.Instance.AddLog("九点标定完成，仿射关系已保存");
+            }
         }
         catch (Exception exception)
         {
-            Logger.Instance.AddLog(exception.Message);
-            MessageBox.Show(exception.Message);
+            Logger.Instance.AddLog($"拍照后的处理操作失败：{exception.Message}");
+            MessageBox.Show($@"拍照后的处理操作失败：{exception.Message}");
         }
     }
 
@@ -145,6 +166,43 @@ public partial class Calibration : UserControl
         if (double.TryParse(selectShapeMax.Text, out double result))
         {
             SelectShapeMax = result;
+        }
+    }
+
+
+    private void listenPlc_Click(object sender, EventArgs e)
+    {
+        PlcControl.Instance.StartListener(1000, OnPlcListening);
+    }
+
+    private async Task OnPlcListening()
+    {
+        try
+        {
+            var measureNum = await PlcControl.Instance.Read<int>(PlcDataAddress.MeasureNum.GetAddress());
+            var x = await PlcControl.Instance.Read<uint>(PlcDataAddress.X.GetAddress());
+            var y = await PlcControl.Instance.Read<uint>(PlcDataAddress.Y.GetAddress());
+            PlcControl.Instance.MeasureNum = measureNum;
+            PlcControl.Instance.RealX = x.ConvertToFloat();
+            PlcControl.Instance.RealY = y.ConvertToFloat();
+
+            var nineCaliNum = await PlcControl.Instance.Read<uint>(PlcDataAddress.NineCaliNum.GetAddress());
+            // 限制
+            if (PlcControl.Instance.NineCaliNum != nineCaliNum && nineCaliNum != 0)
+            {
+                PlcControl.Instance.NineCaliNum = nineCaliNum.ConvertToInt();
+                // 读取到数据后执行拍照
+                CameraCtrl.Instance.Capture();
+
+                // 保存物理坐标
+                _realRow.Append(x);
+                _realColumn.Append(y);
+            }
+        }
+        catch (Exception exception)
+        {
+            Logger.Instance.AddLog($"PLC监听失败：{exception.Message}");
+            MessageBox.Show($@"PLC监听失败：{exception.Message}");
         }
     }
 }

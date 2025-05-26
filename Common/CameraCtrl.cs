@@ -12,6 +12,9 @@ public class CameraCtrl
 
     public HImage? Image { get; set; }
 
+    // 相机标定仿射关系
+    public HHomMat2D HomMat2D = new();
+
     public string Name { get; set; } = "GigEVision2";
     public int HorizontalResolution { get; set; }
     public int VerticalResolution { get; set; }

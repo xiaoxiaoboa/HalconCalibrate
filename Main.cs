@@ -10,6 +10,9 @@ public partial class Main : Form
 {
     private HWindow? _window;
 
+    private Logs? _logs;
+
+
     private double _scale = 1.0;
     private double _zoomFactor = 1.1;
 
@@ -24,6 +27,7 @@ public partial class Main : Form
     private void Main_Load(object sender, EventArgs e)
     {
         _window?.SetColor("red");
+
 
         ninePointCalib_Click(sender, e);
     }
@@ -73,15 +77,22 @@ public partial class Main : Form
         }
     }
 
+    // 打开日志窗口
     private void displayLogs_Click(object sender, EventArgs e)
     {
-        var logs = new Logs();
-        logs.Show();
+        if (_logs == null || _logs.IsDisposed)
+        {
+            _logs = new Logs();
+            _logs.Show();
+        }
+        else
+        {
+            _logs.Close();
+        }
     }
 
     private void connectPlc_Click(object sender, EventArgs e)
     {
-        
     }
 
     // 切换到标定项目
@@ -111,10 +122,10 @@ public partial class Main : Form
     private void disconnectCamera_Click(object sender, EventArgs e)
     {
         CameraCtrl.Instance.DisConnect();
-        
+
         connectCamera.Enabled = true;
         indicatorLight1.IsOn = !indicatorLight1.IsOn;
-        
+
         Logger.Instance.AddLog("相机断开");
     }
 }
