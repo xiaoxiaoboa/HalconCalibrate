@@ -8,9 +8,7 @@ namespace HalconCalibration;
 
 public partial class Main : Form
 {
-    private HWindow _window;
-
-    private HImage _image = new();
+    private HWindow? _window;
 
     private double _scale = 1.0;
     private double _zoomFactor = 1.1;
@@ -25,6 +23,8 @@ public partial class Main : Form
 
     private void Main_Load(object sender, EventArgs e)
     {
+        _window?.SetColor("red");
+
         ninePointCalib_Click(sender, e);
     }
 
@@ -48,8 +48,10 @@ public partial class Main : Form
     {
         if (CameraCtrl.Instance.Connect(out var msg))
         {
-            connectCamera.BackColor = Color.LimeGreen;
             Logger.Instance.AddLog("相机连接成功");
+
+            connectCamera.Enabled = false;
+            indicatorLight1.IsOn = !indicatorLight1.IsOn;
         }
         else
         {
@@ -63,12 +65,11 @@ public partial class Main : Form
     {
         try
         {
-            _image = CameraCtrl.Instance.TakeGraphic();
-            _image.DispObj(_window);
+            CameraCtrl.Instance.Capture();
         }
         catch (Exception exception)
         {
-            Logger.Instance.AddLog(exception.Message);
+            Logger.Instance.AddLog($"拍照失败：{exception.Message}");
         }
     }
 
@@ -80,13 +81,14 @@ public partial class Main : Form
 
     private void connectPlc_Click(object sender, EventArgs e)
     {
-        Logger.Instance.AddLog("log");
+        
     }
 
     // 切换到标定项目
     private void ninePointCalib_Click(object sender, EventArgs e)
     {
-        var cali = new Calibration();
+        if (_window == null) return;
+        var cali = new Calibration(_window);
         SwitchProject(cali, HalconPorjects.NinePointCalibration);
     }
 
@@ -103,5 +105,16 @@ public partial class Main : Form
             _currentPorject.Item1 = HalconPorjects.NinePointCalibration;
             _currentPorject.Item2 = control;
         }
+    }
+
+    // 断开相机
+    private void disconnectCamera_Click(object sender, EventArgs e)
+    {
+        CameraCtrl.Instance.DisConnect();
+        
+        connectCamera.Enabled = true;
+        indicatorLight1.IsOn = !indicatorLight1.IsOn;
+        
+        Logger.Instance.AddLog("相机断开");
     }
 }

@@ -8,7 +8,9 @@ public class CameraCtrl
 
     public static CameraCtrl Instance => _instance.Value;
 
-    private HFramegrabber HFrameGrabber { get; set; }
+    private HFramegrabber? HFrameGrabber { get; set; }
+
+    public HImage? Image { get; set; }
 
     public string Name { get; set; } = "GigEVision2";
     public int HorizontalResolution { get; set; }
@@ -27,14 +29,15 @@ public class CameraCtrl
     public int Port { get; set; }
     public int LineIn { get; set; } = -1;
 
+    public event EventHandler? CapturedCompleted;
 
     public bool Connect(out string? errorMessage)
     {
         errorMessage = null;
         try
         {
-            if (HFrameGrabber.IsInitialized()) throw new Exception("相机已初始化");
-            
+            if (HFrameGrabber != null && HFrameGrabber.IsInitialized()) throw new Exception("相机已初始化");
+
             HFrameGrabber = new HFramegrabber(Name, HorizontalResolution, VerticalResolution, ImageWidth,
                 ImageHeight,
                 StartRow, StartColumn, Field, BitsPerChannel, ColorSpace, Generic, ExternalTrigger, CameraType,
@@ -42,7 +45,6 @@ public class CameraCtrl
                 Port, LineIn);
 
             return true;
-
         }
         catch (Exception exception)
         {
@@ -55,7 +57,7 @@ public class CameraCtrl
     {
         try
         {
-            HFrameGrabber.CloseFramegrabber();
+            HFrameGrabber?.CloseFramegrabber();
             return null;
         }
         catch (Exception exception)
@@ -64,12 +66,16 @@ public class CameraCtrl
         }
     }
 
-    public HImage TakeGraphic()
+    public void Capture()
     {
         try
         {
-            HFrameGrabber.GrabImageStart(-1.0);
-            return HFrameGrabber.GrabImageAsync(-1.0);
+            HFrameGrabber?.GrabImageStart(-1.0);
+            if (HFrameGrabber == null) throw new Exception("相机未初始化");
+
+            Image = HFrameGrabber.GrabImageAsync(-1.0);
+
+            CapturedCompleted?.Invoke(this, EventArgs.Empty);
         }
         catch (Exception exception)
         {

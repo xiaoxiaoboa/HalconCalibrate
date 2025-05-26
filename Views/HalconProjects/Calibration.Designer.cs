@@ -189,6 +189,7 @@ partial class Calibration
         selectShapeMin.Name = "selectShapeMin";
         selectShapeMin.Size = new System.Drawing.Size(142, 27);
         selectShapeMin.TabIndex = 2;
+        selectShapeMin.TextChanged += selectShapeMin_TextChanged;
         // 
         // selectShapeMax
         // 
@@ -197,6 +198,7 @@ partial class Calibration
         selectShapeMax.Name = "selectShapeMax";
         selectShapeMax.Size = new System.Drawing.Size(142, 27);
         selectShapeMax.TabIndex = 3;
+        selectShapeMax.TextChanged += selectShapeMax_TextChanged;
         // 
         // label1
         // 
@@ -253,6 +255,7 @@ partial class Calibration
         thresholdMin.Name = "thresholdMin";
         thresholdMin.Size = new System.Drawing.Size(142, 27);
         thresholdMin.TabIndex = 2;
+        thresholdMin.TextChanged += thresholdMin_TextChanged;
         // 
         // thresholdMax
         // 
@@ -261,6 +264,7 @@ partial class Calibration
         thresholdMax.Name = "thresholdMax";
         thresholdMax.Size = new System.Drawing.Size(142, 27);
         thresholdMax.TabIndex = 3;
+        thresholdMax.TextChanged += thresholdMax_TextChanged;
         // 
         // label4
         // 

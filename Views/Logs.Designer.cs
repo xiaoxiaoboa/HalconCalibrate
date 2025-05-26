@@ -92,6 +92,7 @@ partial class Logs
         Controls.Add(menuStrip1);
         MainMenuStrip = menuStrip1;
         Name = "Logs";
+        StartPosition = FormStartPosition.CenterScreen;
         Text = "Logs";
         Load += Logs_Load;
         ((ISupportInitialize)dataGridView1).EndInit();
