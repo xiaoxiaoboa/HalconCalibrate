@@ -45,7 +45,7 @@ partial class Main
         displayLogs = new Button();
         takeGraphic = new Button();
         groupBox2 = new GroupBox();
-        calibration1 = new HalconCalibration.Views.HalconProjects.Calibration();
+        panel2 = new Panel();
         menuStrip1.SuspendLayout();
         panel1.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
@@ -76,8 +76,9 @@ partial class Main
         // ninePointCalib
         // 
         ninePointCalib.Name = "ninePointCalib";
-        ninePointCalib.Size = new Size(152, 26);
+        ninePointCalib.Size = new Size(224, 26);
         ninePointCalib.Text = "九点标定";
+        ninePointCalib.Click += ninePointCalib_Click;
         // 
         // toolStripMenuItem1
         // 
@@ -223,7 +224,7 @@ partial class Main
         // 
         // groupBox2
         // 
-        groupBox2.Controls.Add(calibration1);
+        groupBox2.Controls.Add(panel2);
         groupBox2.Dock = DockStyle.Fill;
         groupBox2.Location = new Point(3, 161);
         groupBox2.Name = "groupBox2";
@@ -232,13 +233,13 @@ partial class Main
         groupBox2.TabStop = false;
         groupBox2.Text = "项目配置";
         // 
-        // calibration1
+        // panel2
         // 
-        calibration1.Dock = DockStyle.Fill;
-        calibration1.Location = new Point(3, 23);
-        calibration1.Name = "calibration1";
-        calibration1.Size = new Size(312, 371);
-        calibration1.TabIndex = 0;
+        panel2.Dock = DockStyle.Fill;
+        panel2.Location = new Point(3, 23);
+        panel2.Name = "panel2";
+        panel2.Size = new Size(312, 371);
+        panel2.TabIndex = 0;
         // 
         // Main
         // 
@@ -248,6 +249,7 @@ partial class Main
         Controls.Add(panel1);
         Controls.Add(menuStrip1);
         MainMenuStrip = menuStrip1;
+        MinimumSize = new Size(1121, 642);
         Name = "Main";
         Text = "Form1";
         Load += Main_Load;
@@ -263,7 +265,7 @@ partial class Main
         PerformLayout();
     }
 
-    private HalconCalibration.Views.HalconProjects.Calibration calibration1;
+    private System.Windows.Forms.Panel panel2;
 
     private System.Windows.Forms.Button takeGraphic;
 
@@ -291,7 +293,7 @@ partial class Main
 
     #endregion
 
-    private ToolStripMenuItem projects;
+    private System.Windows.Forms.ToolStripMenuItem projects;
     private GroupBox groupBox1;
     private System.Windows.Forms.GroupBox groupBox2;
     private ToolStripMenuItem ninePointCalib;

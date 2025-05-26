@@ -1,10 +1,12 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
 using HalconCalibration.Enums;
 using HalconDotNet;
 
 namespace HalconCalibration.Views.HalconProjects;
 
+[ToolboxItem(false)]
 public partial class Calibration : UserControl
 {
     private HImage _image = new("C:\\Users\\zxiao\\Desktop\\halcon_dump.bmp");
@@ -27,6 +29,9 @@ public partial class Calibration : UserControl
 
         thresholdMin.Text = ThresholdMin.ToString(CultureInfo.CurrentCulture);
         thresholdMax.Text = ThresholdMax.ToString(CultureInfo.CurrentCulture);
+
+        selectShapeMin.Text = SelectShapeMin.ToString(CultureInfo.CurrentCulture);
+        selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
     }
 
 

@@ -1,5 +1,7 @@
 using HalconCalibration.Common;
+using HalconCalibration.Enums;
 using HalconCalibration.Views;
+using HalconCalibration.Views.HalconProjects;
 using HalconDotNet;
 
 namespace HalconCalibration;
@@ -13,6 +15,8 @@ public partial class Main : Form
     private double _scale = 1.0;
     private double _zoomFactor = 1.1;
 
+    private (HalconPorjects?, UserControl) _currentPorject;
+
     public Main()
     {
         InitializeComponent();
@@ -21,6 +25,7 @@ public partial class Main : Form
 
     private void Main_Load(object sender, EventArgs e)
     {
+        ninePointCalib_Click(sender, e);
     }
 
     // 需要手动绑定事件，使用【设计器】绑定不生效
@@ -71,11 +76,32 @@ public partial class Main : Form
     {
         var logs = new Logs();
         logs.Show();
-        
     }
 
     private void connectPlc_Click(object sender, EventArgs e)
     {
         Logger.Instance.AddLog("log");
+    }
+
+    // 切换到标定项目
+    private void ninePointCalib_Click(object sender, EventArgs e)
+    {
+        var cali = new Calibration();
+        SwitchProject(cali, HalconPorjects.NinePointCalibration);
+    }
+
+    // 切换项目通用函数
+    private void SwitchProject(UserControl control, HalconPorjects type)
+    {
+        if (_currentPorject.Item1 != type)
+        {
+            _currentPorject.Item2?.Dispose();
+            control.Parent = panel2;
+            control.Dock = DockStyle.Fill;
+
+            // 更新状态
+            _currentPorject.Item1 = HalconPorjects.NinePointCalibration;
+            _currentPorject.Item2 = control;
+        }
     }
 }
