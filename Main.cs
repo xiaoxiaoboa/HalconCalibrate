@@ -55,6 +55,7 @@ public partial class Main : Form
             Logger.Instance.AddLog("相机连接成功");
 
             connectCamera.Enabled = false;
+            disconnectCamera.Enabled = true;
             indicatorLight1.IsOn = !indicatorLight1.IsOn;
         }
         else
@@ -91,8 +92,25 @@ public partial class Main : Form
         }
     }
 
-    private void connectPlc_Click(object sender, EventArgs e)
+    // 连接PLC
+    private async void connectPlc_Click(object sender, EventArgs e)
     {
+        try
+        {
+            await Task.Run(() => { PlcControl.Instance.Connect(); });
+            if (PlcControl.Instance.IsConnected)
+            {
+                indicatorLight2.IsOn = !indicatorLight2.IsOn;
+                connectPlc.Enabled = false;
+                disconnectPlc.Enabled = true;
+                Logger.Instance.AddLog("PLC连接成功");
+            }
+        }
+        catch (Exception exception)
+        {
+            Logger.Instance.AddLog(exception.Message);
+            MessageBox.Show(exception.Message);
+        }
     }
 
     // 切换到标定项目
@@ -100,6 +118,8 @@ public partial class Main : Form
     {
         if (_window == null) return;
         var cali = new Calibration(_window);
+        groupBox3.Text = @"项目-九点标定";
+        
         SwitchProject(cali, HalconPorjects.NinePointCalibration);
     }
 
@@ -124,8 +144,19 @@ public partial class Main : Form
         CameraCtrl.Instance.DisConnect();
 
         connectCamera.Enabled = true;
+        disconnectCamera.Enabled = false;
         indicatorLight1.IsOn = !indicatorLight1.IsOn;
 
         Logger.Instance.AddLog("相机断开");
+    }
+
+    private void disconnectPlc_Click(object sender, EventArgs e)
+    {
+        PlcControl.Instance.Disconnect();
+
+        disconnectPlc.Enabled = false;
+        connectPlc.Enabled = true;
+        indicatorLight2.IsOn = !indicatorLight2.IsOn;
+        Logger.Instance.AddLog("PLC断开");
     }
 }

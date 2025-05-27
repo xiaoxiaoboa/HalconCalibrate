@@ -96,6 +96,7 @@ partial class Calibration
         // panel3
         // 
         panel3.AutoScroll = true;
+        panel3.BackColor = System.Drawing.SystemColors.Control;
         panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
         panel3.Controls.Add(tableLayoutPanel1);
         panel3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -106,6 +107,7 @@ partial class Calibration
         // 
         // tableLayoutPanel1
         // 
+        tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right));
         tableLayoutPanel1.ColumnCount = 1;
         tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel1.Controls.Add(tableLayoutPanel5, 0, 0);
@@ -121,7 +123,7 @@ partial class Calibration
         tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
         tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 64F));
         tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-        tableLayoutPanel1.Size = new System.Drawing.Size(288, 400);
+        tableLayoutPanel1.Size = new System.Drawing.Size(265, 400);
         tableLayoutPanel1.TabIndex = 0;
         // 
         // tableLayoutPanel5
@@ -136,7 +138,7 @@ partial class Calibration
         tableLayoutPanel5.Name = "tableLayoutPanel5";
         tableLayoutPanel5.RowCount = 1;
         tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel5.Size = new System.Drawing.Size(282, 94);
+        tableLayoutPanel5.Size = new System.Drawing.Size(259, 94);
         tableLayoutPanel5.TabIndex = 0;
         // 
         // label1
@@ -144,7 +146,7 @@ partial class Calibration
         label1.Dock = System.Windows.Forms.DockStyle.Fill;
         label1.Location = new System.Drawing.Point(3, 0);
         label1.Name = "label1";
-        label1.Size = new System.Drawing.Size(79, 94);
+        label1.Size = new System.Drawing.Size(72, 94);
         label1.TabIndex = 0;
         label1.Text = "threshold";
         label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -159,12 +161,12 @@ partial class Calibration
         tableLayoutPanel2.Controls.Add(thresholdMin, 1, 0);
         tableLayoutPanel2.Controls.Add(thresholdMax, 1, 1);
         tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-        tableLayoutPanel2.Location = new System.Drawing.Point(88, 3);
+        tableLayoutPanel2.Location = new System.Drawing.Point(81, 3);
         tableLayoutPanel2.Name = "tableLayoutPanel2";
         tableLayoutPanel2.RowCount = 2;
         tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
         tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel2.Size = new System.Drawing.Size(191, 88);
+        tableLayoutPanel2.Size = new System.Drawing.Size(175, 88);
         tableLayoutPanel2.TabIndex = 1;
         // 
         // label2
@@ -172,7 +174,7 @@ partial class Calibration
         label2.Dock = System.Windows.Forms.DockStyle.Fill;
         label2.Location = new System.Drawing.Point(3, 0);
         label2.Name = "label2";
-        label2.Size = new System.Drawing.Size(43, 44);
+        label2.Size = new System.Drawing.Size(39, 44);
         label2.TabIndex = 0;
         label2.Text = "Min";
         label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -182,7 +184,7 @@ partial class Calibration
         label3.Dock = System.Windows.Forms.DockStyle.Fill;
         label3.Location = new System.Drawing.Point(3, 44);
         label3.Name = "label3";
-        label3.Size = new System.Drawing.Size(43, 44);
+        label3.Size = new System.Drawing.Size(39, 44);
         label3.TabIndex = 1;
         label3.Text = "Max";
         label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -190,18 +192,18 @@ partial class Calibration
         // thresholdMin
         // 
         thresholdMin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
-        thresholdMin.Location = new System.Drawing.Point(52, 8);
+        thresholdMin.Location = new System.Drawing.Point(48, 8);
         thresholdMin.Name = "thresholdMin";
-        thresholdMin.Size = new System.Drawing.Size(136, 27);
+        thresholdMin.Size = new System.Drawing.Size(124, 27);
         thresholdMin.TabIndex = 2;
         thresholdMin.TextChanged += thresholdMin_TextChanged;
         // 
         // thresholdMax
         // 
         thresholdMax.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
-        thresholdMax.Location = new System.Drawing.Point(52, 52);
+        thresholdMax.Location = new System.Drawing.Point(48, 52);
         thresholdMax.Name = "thresholdMax";
-        thresholdMax.Size = new System.Drawing.Size(136, 27);
+        thresholdMax.Size = new System.Drawing.Size(124, 27);
         thresholdMax.TabIndex = 3;
         thresholdMax.TextChanged += thresholdMax_TextChanged;
         // 
@@ -217,7 +219,7 @@ partial class Calibration
         tableLayoutPanel6.Name = "tableLayoutPanel6";
         tableLayoutPanel6.RowCount = 1;
         tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel6.Size = new System.Drawing.Size(282, 94);
+        tableLayoutPanel6.Size = new System.Drawing.Size(259, 94);
         tableLayoutPanel6.TabIndex = 1;
         // 
         // label4
@@ -226,7 +228,7 @@ partial class Calibration
         label4.Dock = System.Windows.Forms.DockStyle.Fill;
         label4.Location = new System.Drawing.Point(3, 0);
         label4.Name = "label4";
-        label4.Size = new System.Drawing.Size(80, 94);
+        label4.Size = new System.Drawing.Size(72, 94);
         label4.TabIndex = 2;
         label4.Text = "select";
         label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -241,12 +243,12 @@ partial class Calibration
         tableLayoutPanel4.Controls.Add(selectShapeMin, 1, 0);
         tableLayoutPanel4.Controls.Add(selectShapeMax, 1, 1);
         tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
-        tableLayoutPanel4.Location = new System.Drawing.Point(89, 3);
+        tableLayoutPanel4.Location = new System.Drawing.Point(81, 3);
         tableLayoutPanel4.Name = "tableLayoutPanel4";
         tableLayoutPanel4.RowCount = 2;
         tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
         tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel4.Size = new System.Drawing.Size(190, 88);
+        tableLayoutPanel4.Size = new System.Drawing.Size(175, 88);
         tableLayoutPanel4.TabIndex = 3;
         // 
         // label5
@@ -254,7 +256,7 @@ partial class Calibration
         label5.Dock = System.Windows.Forms.DockStyle.Fill;
         label5.Location = new System.Drawing.Point(3, 0);
         label5.Name = "label5";
-        label5.Size = new System.Drawing.Size(43, 44);
+        label5.Size = new System.Drawing.Size(39, 44);
         label5.TabIndex = 0;
         label5.Text = "Min";
         label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -264,7 +266,7 @@ partial class Calibration
         label6.Dock = System.Windows.Forms.DockStyle.Fill;
         label6.Location = new System.Drawing.Point(3, 44);
         label6.Name = "label6";
-        label6.Size = new System.Drawing.Size(43, 44);
+        label6.Size = new System.Drawing.Size(39, 44);
         label6.TabIndex = 1;
         label6.Text = "Max";
         label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -272,18 +274,18 @@ partial class Calibration
         // selectShapeMin
         // 
         selectShapeMin.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
-        selectShapeMin.Location = new System.Drawing.Point(52, 8);
+        selectShapeMin.Location = new System.Drawing.Point(48, 8);
         selectShapeMin.Name = "selectShapeMin";
-        selectShapeMin.Size = new System.Drawing.Size(135, 27);
+        selectShapeMin.Size = new System.Drawing.Size(124, 27);
         selectShapeMin.TabIndex = 2;
         selectShapeMin.TextChanged += selectShapeMin_TextChanged;
         // 
         // selectShapeMax
         // 
         selectShapeMax.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
-        selectShapeMax.Location = new System.Drawing.Point(52, 52);
+        selectShapeMax.Location = new System.Drawing.Point(48, 52);
         selectShapeMax.Name = "selectShapeMax";
-        selectShapeMax.Size = new System.Drawing.Size(135, 27);
+        selectShapeMax.Size = new System.Drawing.Size(124, 27);
         selectShapeMax.TabIndex = 3;
         selectShapeMax.TextChanged += selectShapeMax_TextChanged;
         // 
@@ -299,7 +301,7 @@ partial class Calibration
         tableLayoutPanel7.Name = "tableLayoutPanel7";
         tableLayoutPanel7.RowCount = 1;
         tableLayoutPanel7.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel7.Size = new System.Drawing.Size(282, 60);
+        tableLayoutPanel7.Size = new System.Drawing.Size(259, 60);
         tableLayoutPanel7.TabIndex = 2;
         // 
         // label7
@@ -308,7 +310,7 @@ partial class Calibration
         label7.Dock = System.Windows.Forms.DockStyle.Fill;
         label7.Location = new System.Drawing.Point(3, 0);
         label7.Name = "label7";
-        label7.Size = new System.Drawing.Size(103, 60);
+        label7.Size = new System.Drawing.Size(94, 60);
         label7.TabIndex = 4;
         label7.Text = "features";
         label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -317,9 +319,9 @@ partial class Calibration
         // 
         featuresComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
         featuresComboBox.FormattingEnabled = true;
-        featuresComboBox.Location = new System.Drawing.Point(112, 16);
+        featuresComboBox.Location = new System.Drawing.Point(103, 16);
         featuresComboBox.Name = "featuresComboBox";
-        featuresComboBox.Size = new System.Drawing.Size(167, 28);
+        featuresComboBox.Size = new System.Drawing.Size(153, 28);
         featuresComboBox.TabIndex = 5;
         featuresComboBox.SelectionChangeCommitted += featuresComboBox_SelectionChangeCommitted;
         // 
@@ -335,16 +337,16 @@ partial class Calibration
         tableLayoutPanel8.Name = "tableLayoutPanel8";
         tableLayoutPanel8.RowCount = 1;
         tableLayoutPanel8.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel8.Size = new System.Drawing.Size(282, 58);
+        tableLayoutPanel8.Size = new System.Drawing.Size(259, 58);
         tableLayoutPanel8.TabIndex = 3;
         // 
         // operatorComboBox
         // 
         operatorComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right));
         operatorComboBox.FormattingEnabled = true;
-        operatorComboBox.Location = new System.Drawing.Point(111, 15);
+        operatorComboBox.Location = new System.Drawing.Point(102, 15);
         operatorComboBox.Name = "operatorComboBox";
-        operatorComboBox.Size = new System.Drawing.Size(168, 28);
+        operatorComboBox.Size = new System.Drawing.Size(154, 28);
         operatorComboBox.TabIndex = 7;
         operatorComboBox.SelectionChangeCommitted += operatorComboBox_SelectionChangeCommitted;
         // 
@@ -354,7 +356,7 @@ partial class Calibration
         label8.Dock = System.Windows.Forms.DockStyle.Fill;
         label8.Location = new System.Drawing.Point(3, 0);
         label8.Name = "label8";
-        label8.Size = new System.Drawing.Size(102, 58);
+        label8.Size = new System.Drawing.Size(93, 58);
         label8.TabIndex = 6;
         label8.Text = "operator";
         label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -371,7 +373,7 @@ partial class Calibration
         tableLayoutPanel9.Name = "tableLayoutPanel9";
         tableLayoutPanel9.RowCount = 1;
         tableLayoutPanel9.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel9.Size = new System.Drawing.Size(282, 64);
+        tableLayoutPanel9.Size = new System.Drawing.Size(259, 64);
         tableLayoutPanel9.TabIndex = 4;
         // 
         // panel6
@@ -381,7 +383,7 @@ partial class Calibration
         panel6.Location = new System.Drawing.Point(3, 3);
         panel6.Name = "panel6";
         panel6.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
-        panel6.Size = new System.Drawing.Size(135, 58);
+        panel6.Size = new System.Drawing.Size(123, 58);
         panel6.TabIndex = 0;
         // 
         // listenPlc
@@ -389,7 +391,7 @@ partial class Calibration
         listenPlc.Dock = System.Windows.Forms.DockStyle.Fill;
         listenPlc.Location = new System.Drawing.Point(15, 5);
         listenPlc.Name = "listenPlc";
-        listenPlc.Size = new System.Drawing.Size(105, 48);
+        listenPlc.Size = new System.Drawing.Size(93, 48);
         listenPlc.TabIndex = 0;
         listenPlc.Text = "监听PLC";
         listenPlc.UseVisualStyleBackColor = true;
@@ -399,10 +401,10 @@ partial class Calibration
         // 
         panel7.Controls.Add(stopListen);
         panel7.Dock = System.Windows.Forms.DockStyle.Fill;
-        panel7.Location = new System.Drawing.Point(144, 3);
+        panel7.Location = new System.Drawing.Point(132, 3);
         panel7.Name = "panel7";
         panel7.Padding = new System.Windows.Forms.Padding(15, 5, 15, 5);
-        panel7.Size = new System.Drawing.Size(135, 58);
+        panel7.Size = new System.Drawing.Size(124, 58);
         panel7.TabIndex = 1;
         // 
         // stopListen
@@ -410,7 +412,7 @@ partial class Calibration
         stopListen.Dock = System.Windows.Forms.DockStyle.Fill;
         stopListen.Location = new System.Drawing.Point(15, 5);
         stopListen.Name = "stopListen";
-        stopListen.Size = new System.Drawing.Size(105, 48);
+        stopListen.Size = new System.Drawing.Size(94, 48);
         stopListen.TabIndex = 0;
         stopListen.Text = "停止监听";
         stopListen.UseVisualStyleBackColor = true;
@@ -524,7 +526,7 @@ partial class Calibration
     private System.Windows.Forms.Label label3;
     private System.Windows.Forms.TextBox thresholdMin;
     private System.Windows.Forms.TextBox thresholdMax;
-    private Panel panel3;
+    private System.Windows.Forms.Panel panel3;
     private Panel panel2;
     private TableLayoutPanel tableLayoutPanel3;
     private Panel panel4;
@@ -541,13 +543,13 @@ partial class Calibration
     private System.Windows.Forms.ComboBox featuresComboBox;
     private System.Windows.Forms.ComboBox operatorComboBox;
     private System.Windows.Forms.Label label8;
-    private TableLayoutPanel tableLayoutPanel5;
-    private TableLayoutPanel tableLayoutPanel6;
-    private TableLayoutPanel tableLayoutPanel7;
-    private TableLayoutPanel tableLayoutPanel8;
-    private TableLayoutPanel tableLayoutPanel9;
-    private Panel panel6;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel8;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel9;
+    private System.Windows.Forms.Panel panel6;
     private System.Windows.Forms.Button listenPlc;
-    private Panel panel7;
+    private System.Windows.Forms.Panel panel7;
     private System.Windows.Forms.Button stopListen;
 }

@@ -54,8 +54,9 @@ namespace HalconCalibration.Common
         /// <param name="callback">每次监听器触发时执行的异步回调函数。</param>
         public void StartListener(int interval, Func<Task> callback)
         {
-            if (_timer == null) return;
-            if (!IsConnected) throw new Exception("PLC 未连接");
+            if (_timer != null) return;
+            // TODO 开发阶段，暂时注释
+            // if (!IsConnected) throw new Exception("PLC 未连接");
 
             _timer = new Timer();
             _timer.Interval = interval; // 每 1000ms 读取一次
@@ -86,11 +87,11 @@ namespace HalconCalibration.Common
         {
             // var ip = IniControl.Instance.Read("PlcConfig", "IP");
             // var port = IniControl.Instance.Read("PlcConfig", "Port");
-            // if (_plc != null && _plc.IsConnected)
-            //     return;
-            // _plc = new Plc(CpuType.S71500, ip, Convert.ToInt32(port), 0, 1);
-            //
-            // _plc.Open();
+            if (_plc != null && _plc.IsConnected)
+                return;
+            _plc = new Plc(CpuType.S71500, "192.168.176.120", 102, 0, 1);
+
+            _plc.Open();
         }
 
         // 断开

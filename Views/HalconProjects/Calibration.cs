@@ -12,8 +12,7 @@ namespace HalconCalibration.Views.HalconProjects;
 public partial class Calibration : UserControl
 {
     private HWindow _window;
-
-    // private HImage _image = new("C:\\Users\\zxiao\\Desktop\\halcon_dump.bmp");
+    
     private double ThresholdMin { get; set; } = 125.0;
     private double ThresholdMax { get; set; } = 255.0;
     private double SelectShapeMin { get; set; } = 150;
@@ -34,7 +33,6 @@ public partial class Calibration : UserControl
         InitializeComponent();
 
         _window = hWindow;
-        // _image.DispObj(_window);
 
         featuresComboBox.DataSource = Enum.GetNames(typeof(SelectShapeFeatures));
         operatorComboBox.DataSource = Enum.GetNames(typeof(SelectShapeOperation));
@@ -46,8 +44,19 @@ public partial class Calibration : UserControl
 
         selectShapeMin.Text = SelectShapeMin.ToString(CultureInfo.CurrentCulture);
         selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
+    }
 
-        CameraCtrl.Instance.CapturedCompleted += OnCaptured;
+    // 恢复控件到UI线程执行
+    private void RunOnUIThread(Action action)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(action);
+        }
+        else
+        {
+            action();
+        }
     }
 
     // 拍照成功后执行
@@ -63,23 +72,30 @@ public partial class Calibration : UserControl
             HRegion selectRegion = connectionRegion.SelectShape(Feature, Operator, SelectShapeMin, SelectShapeMax);
             selectRegion.AreaCenter(out HTuple row, out HTuple column);
 
+            // 图像加载到控件
             _window.ClearWindow();
             grayImage.DispObj(_window);
             selectRegion.DispObj(_window);
+            
 
-            Logger.Instance.AddLog("图像处理完成");
 
             // 保存像素坐标
             _pixelRow.Append(row);
             _pixelColumn.Append(column);
 
+            RunOnUIThread(() => Logger.Instance.AddLog($"圆点，row：{row}，column：{column}"));
+
+
             if (PlcControl.Instance.NineCaliNum == 9)
             {
+                // 点对仿射
                 CameraCtrl.Instance.HomMat2D.VectorToHomMat2d(_pixelRow, _pixelColumn, _realRow, _realColumn);
-
+                // 停止监听
                 PlcControl.Instance.StopListener();
 
                 Logger.Instance.AddLog("九点标定完成，仿射关系已保存");
+                // 恢复默认
+                PlcControl.Instance.NineCaliNum = 0;
             }
         }
         catch (Exception exception)
@@ -173,13 +189,25 @@ public partial class Calibration : UserControl
     // 开启监听
     private void listenPlc_Click(object sender, EventArgs e)
     {
-        PlcControl.Instance.StartListener(1000, OnPlcListening);
+        try
+        {
+            PlcControl.Instance.StartListener(1000, OnPlcListening);
+            CameraCtrl.Instance.CapturedCompleted += OnCaptured;
+            Logger.Instance.AddLog("=========监听开始，1000毫秒读取一次=========");
+        }
+        catch (Exception exception)
+        {
+            Logger.Instance.AddLog($"监听失败：{exception.Message}");
+            MessageBox.Show($@"监听失败：{exception.Message}");
+        }
     }
 
     // 停止监听
     private void stopListen_Click(object sender, EventArgs e)
     {
         PlcControl.Instance.StopListener();
+        CameraCtrl.Instance.CapturedCompleted -= OnCaptured;
+        Logger.Instance.AddLog("监听停止");
     }
 
     private async Task OnPlcListening()
@@ -194,9 +222,12 @@ public partial class Calibration : UserControl
             PlcControl.Instance.RealY = y.ConvertToFloat();
 
             var nineCaliNum = await PlcControl.Instance.Read<uint>(PlcDataAddress.NineCaliNum.GetAddress());
+            Console.WriteLine(nineCaliNum);
             // 限制
             if (PlcControl.Instance.NineCaliNum != nineCaliNum && nineCaliNum != 0)
             {
+                RunOnUIThread(() => Logger.Instance.AddLog($"第{nineCaliNum}次执行开始"));
+
                 PlcControl.Instance.NineCaliNum = nineCaliNum.ConvertToInt();
                 // 读取到数据后执行拍照
                 CameraCtrl.Instance.Capture();
@@ -208,7 +239,8 @@ public partial class Calibration : UserControl
         }
         catch (Exception exception)
         {
-            Logger.Instance.AddLog($"PLC监听失败：{exception.Message}");
+            RunOnUIThread(() => Logger.Instance.AddLog($"PLC监听失败：{exception.Message}"));
+
             MessageBox.Show($@"PLC监听失败：{exception.Message}");
         }
     }
