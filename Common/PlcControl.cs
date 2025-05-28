@@ -85,11 +85,11 @@ namespace HalconCalibration.Common
         /// </summary>
         public void Connect()
         {
-            // var ip = IniControl.Instance.Read("PlcConfig", "IP");
-            // var port = IniControl.Instance.Read("PlcConfig", "Port");
-            if (_plc != null && _plc.IsConnected)
+            var ip = IniControl.Instance.Read("PlcConfig", "IP");
+            var port = IniControl.Instance.Read("PlcConfig", "Port");
+            if (_plc is { IsConnected: true })
                 return;
-            _plc = new Plc(CpuType.S71500, "192.168.176.120", 102, 0, 1);
+            _plc = new Plc(CpuType.S71500, ip, Convert.ToInt32(port), 0, 1);
 
             _plc.Open();
         }

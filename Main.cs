@@ -22,11 +22,15 @@ public partial class Main : Form
     {
         InitializeComponent();
         _window = hSmartWindowControl1.HalconWindow;
+        
     }
 
     private void Main_Load(object sender, EventArgs e)
     {
         _window?.SetColor("red");
+
+
+        IniControl.Instance.Initialize();
 
 
         ninePointCalib_Click(sender, e);
@@ -54,9 +58,14 @@ public partial class Main : Form
         {
             Logger.Instance.AddLog("相机连接成功");
 
+            // 连接按钮关闭
             connectCamera.Enabled = false;
+            // 断开按钮 开启
             disconnectCamera.Enabled = true;
+            // 指示灯
             indicatorLight1.IsOn = !indicatorLight1.IsOn;
+
+            CameraCtrl.Instance.CapturedCompleted += OnCaptured;
         }
         else
         {
@@ -76,6 +85,13 @@ public partial class Main : Form
         {
             Logger.Instance.AddLog($"拍照失败：{exception.Message}");
         }
+    }
+
+    // 拍照后
+    private void OnCaptured(object? sender, EventArgs e)
+    {
+        if (CameraCtrl.Instance.Image != null)
+            CameraCtrl.Instance.Image.DispObj(_window);
     }
 
     // 打开日志窗口
@@ -119,7 +135,7 @@ public partial class Main : Form
         if (_window == null) return;
         var cali = new Calibration(_window);
         groupBox3.Text = @"项目-九点标定";
-        
+
         SwitchProject(cali, HalconPorjects.NinePointCalibration);
     }
 
@@ -141,12 +157,19 @@ public partial class Main : Form
     // 断开相机
     private void disconnectCamera_Click(object sender, EventArgs e)
     {
-        CameraCtrl.Instance.DisConnect();
+        var msg = CameraCtrl.Instance.DisConnect();
+        if (msg != null)
+        {
+            Logger.Instance.AddLog(msg);
+            MessageBox.Show(msg);
+            return;
+        }
 
         connectCamera.Enabled = true;
         disconnectCamera.Enabled = false;
         indicatorLight1.IsOn = !indicatorLight1.IsOn;
 
+        CameraCtrl.Instance.CapturedCompleted -= OnCaptured;
         Logger.Instance.AddLog("相机断开");
     }
 
@@ -158,5 +181,16 @@ public partial class Main : Form
         connectPlc.Enabled = true;
         indicatorLight2.IsOn = !indicatorLight2.IsOn;
         Logger.Instance.AddLog("PLC断开");
+    }
+
+    private void config_Click(object sender, EventArgs e)
+    {
+        var sysConfig = new Config();
+        sysConfig.Show();
+    }
+
+    private void Main_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        CameraCtrl.Instance.DisConnect();
     }
 }

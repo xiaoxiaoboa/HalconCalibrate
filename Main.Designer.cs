@@ -36,13 +36,13 @@ partial class Main
         cameraConfig = new System.Windows.Forms.ToolStripMenuItem();
         disconnectCamera = new System.Windows.Forms.ToolStripMenuItem();
         pLCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-        plcConfig = new System.Windows.Forms.ToolStripMenuItem();
         disconnectPlc = new System.Windows.Forms.ToolStripMenuItem();
+        system = new System.Windows.Forms.ToolStripMenuItem();
+        config = new System.Windows.Forms.ToolStripMenuItem();
         toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
         toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
         panel1 = new System.Windows.Forms.Panel();
         tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-        hSmartWindowControl1 = new HalconDotNet.HSmartWindowControl();
         tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
         groupBox1 = new System.Windows.Forms.GroupBox();
         indicatorLight2 = new HalconCalibration.Views.IndicatorLight();
@@ -56,6 +56,7 @@ partial class Main
         panel2 = new System.Windows.Forms.Panel();
         panel3 = new System.Windows.Forms.Panel();
         groupBox3 = new System.Windows.Forms.GroupBox();
+        hSmartWindowControl1 = new HalconDotNet.HSmartWindowControl();
         menuStrip1.SuspendLayout();
         panel1.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
@@ -71,7 +72,7 @@ partial class Main
         // 
         menuStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Visible;
         menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-        menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { projects, camera, pLCToolStripMenuItem });
+        menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { projects, camera, pLCToolStripMenuItem, system });
         menuStrip1.Location = new System.Drawing.Point(0, 0);
         menuStrip1.Name = "menuStrip1";
         menuStrip1.Size = new System.Drawing.Size(1103, 28);
@@ -115,24 +116,32 @@ partial class Main
         // 
         // pLCToolStripMenuItem
         // 
-        pLCToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { plcConfig, disconnectPlc });
+        pLCToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { disconnectPlc });
         pLCToolStripMenuItem.Name = "pLCToolStripMenuItem";
         pLCToolStripMenuItem.Size = new System.Drawing.Size(50, 24);
         pLCToolStripMenuItem.Text = "PLC";
-        // 
-        // plcConfig
-        // 
-        plcConfig.Name = "plcConfig";
-        plcConfig.Size = new System.Drawing.Size(224, 26);
-        plcConfig.Text = "配置";
         // 
         // disconnectPlc
         // 
         disconnectPlc.Enabled = false;
         disconnectPlc.Name = "disconnectPlc";
-        disconnectPlc.Size = new System.Drawing.Size(224, 26);
+        disconnectPlc.Size = new System.Drawing.Size(149, 26);
         disconnectPlc.Text = "断开PLC";
         disconnectPlc.Click += disconnectPlc_Click;
+        // 
+        // system
+        // 
+        system.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { config });
+        system.Name = "system";
+        system.Size = new System.Drawing.Size(53, 24);
+        system.Text = "系统";
+        // 
+        // config
+        // 
+        config.Name = "config";
+        config.Size = new System.Drawing.Size(122, 26);
+        config.Text = "配置";
+        config.Click += config_Click;
         // 
         // toolStripMenuItem1
         // 
@@ -167,25 +176,6 @@ partial class Main
         tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel1.Size = new System.Drawing.Size(1103, 567);
         tableLayoutPanel1.TabIndex = 0;
-        // 
-        // hSmartWindowControl1
-        // 
-        hSmartWindowControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-        hSmartWindowControl1.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-        hSmartWindowControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-        hSmartWindowControl1.HDoubleClickToFitContent = true;
-        hSmartWindowControl1.HDrawingObjectsModifier = HalconDotNet.HSmartWindowControl.DrawingObjectsModifier.None;
-        hSmartWindowControl1.HImagePart = new System.Drawing.Rectangle(-153, -10, 946, 499);
-        hSmartWindowControl1.HKeepAspectRatio = true;
-        hSmartWindowControl1.HMoveContent = true;
-        hSmartWindowControl1.HZoomContent = HalconDotNet.HSmartWindowControl.ZoomContent.WheelForwardZoomsIn;
-        hSmartWindowControl1.Location = new System.Drawing.Point(3, 23);
-        hSmartWindowControl1.Margin = new System.Windows.Forms.Padding(0);
-        hSmartWindowControl1.Name = "hSmartWindowControl1";
-        hSmartWindowControl1.Size = new System.Drawing.Size(761, 535);
-        hSmartWindowControl1.TabIndex = 0;
-        hSmartWindowControl1.WindowSize = new System.Drawing.Size(761, 535);
-        hSmartWindowControl1.Load += hSmartWindowControl1_Load;
         // 
         // tableLayoutPanel2
         // 
@@ -339,6 +329,25 @@ partial class Main
         groupBox3.TabStop = false;
         groupBox3.Text = "项目";
         // 
+        // hSmartWindowControl1
+        // 
+        hSmartWindowControl1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+        hSmartWindowControl1.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
+        hSmartWindowControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+        hSmartWindowControl1.HDoubleClickToFitContent = true;
+        hSmartWindowControl1.HDrawingObjectsModifier = HalconDotNet.HSmartWindowControl.DrawingObjectsModifier.None;
+        hSmartWindowControl1.HImagePart = new System.Drawing.Rectangle(-153, -10, 946, 499);
+        hSmartWindowControl1.HKeepAspectRatio = true;
+        hSmartWindowControl1.HMoveContent = true;
+        hSmartWindowControl1.HZoomContent = HalconDotNet.HSmartWindowControl.ZoomContent.WheelForwardZoomsIn;
+        hSmartWindowControl1.Location = new System.Drawing.Point(3, 23);
+        hSmartWindowControl1.Margin = new System.Windows.Forms.Padding(0);
+        hSmartWindowControl1.Name = "hSmartWindowControl1";
+        hSmartWindowControl1.Size = new System.Drawing.Size(761, 535);
+        hSmartWindowControl1.TabIndex = 0;
+        hSmartWindowControl1.WindowSize = new System.Drawing.Size(761, 535);
+        hSmartWindowControl1.Load += hSmartWindowControl1_Load;
+        // 
         // Main
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -350,6 +359,7 @@ partial class Main
         MinimumSize = new System.Drawing.Size(1121, 642);
         StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "Form1";
+        FormClosing += Main_FormClosing;
         Load += Main_Load;
         menuStrip1.ResumeLayout(false);
         menuStrip1.PerformLayout();
@@ -409,6 +419,7 @@ partial class Main
     private ToolStripMenuItem cameraConfig;
     private System.Windows.Forms.ToolStripMenuItem disconnectCamera;
     private ToolStripMenuItem pLCToolStripMenuItem;
-    private ToolStripMenuItem plcConfig;
     private System.Windows.Forms.ToolStripMenuItem disconnectPlc;
+    private ToolStripMenuItem system;
+    private ToolStripMenuItem config;
 }

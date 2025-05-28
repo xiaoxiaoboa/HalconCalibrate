@@ -12,7 +12,7 @@ namespace HalconCalibration.Views.HalconProjects;
 public partial class Calibration : UserControl
 {
     private HWindow _window;
-    
+
     private double ThresholdMin { get; set; } = 125.0;
     private double ThresholdMax { get; set; } = 255.0;
     private double SelectShapeMin { get; set; } = 150;
@@ -46,6 +46,12 @@ public partial class Calibration : UserControl
         selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
     }
 
+    private void Calibration_Load(object sender, EventArgs e)
+    {
+        // 控制控件宽度
+        tableLayoutPanel1.Width = (int)(panel3.Width * 0.95);
+    }
+
     // 恢复控件到UI线程执行
     private void RunOnUIThread(Action action)
     {
@@ -60,11 +66,11 @@ public partial class Calibration : UserControl
     }
 
     // 拍照成功后执行
-    private void OnCaptured(object? sender, EventArgs e)
+    private async void OnCaptured(object? sender, EventArgs e)
     {
         try
         {
-            if (CameraCtrl.Instance.Image == null) return;
+            if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
 
             HImage grayImage = CameraCtrl.Instance.Image.Rgb1ToGray();
             HRegion thresholdRegion = grayImage.Threshold(ThresholdMin, ThresholdMax);
@@ -73,27 +79,40 @@ public partial class Calibration : UserControl
             selectRegion.AreaCenter(out HTuple row, out HTuple column);
 
             // 图像加载到控件
-            _window.ClearWindow();
+            _window?.ClearWindow();
             grayImage.DispObj(_window);
             selectRegion.DispObj(_window);
-            
-
 
             // 保存像素坐标
             _pixelRow.Append(row);
             _pixelColumn.Append(column);
 
-            RunOnUIThread(() => Logger.Instance.AddLog($"圆点，row：{row}，column：{column}"));
+            RunOnUIThread(() => Logger.Instance.AddLog($"像素坐标，x：{row}，y：{column}"));
+            RunOnUIThread(() =>
+                Logger.Instance.AddLog($"机械坐标，x：{PlcControl.Instance.RealX}，y：{PlcControl.Instance.RealY}"));
+
+            try
+            {
+                if (PlcControl.Instance.IsConnected)
+                    // 写入九点矫正编号给plc,表示本次点对添加完成
+                    await PlcControl.Instance.Write(PlcDataAddress.NineCaliNumCheck.GetAddress(),
+                        PlcControl.Instance.NineCaliNum);
+            }
+            catch (Exception exception)
+            {
+                RunOnUIThread(() => Logger.Instance.AddLog($"写入PLC失败：{exception.Message}"));
+            }
 
 
             if (PlcControl.Instance.NineCaliNum == 9)
             {
                 // 点对仿射
                 CameraCtrl.Instance.HomMat2D.VectorToHomMat2d(_pixelRow, _pixelColumn, _realRow, _realColumn);
+
                 // 停止监听
                 PlcControl.Instance.StopListener();
 
-                Logger.Instance.AddLog("九点标定完成，仿射关系已保存");
+                Logger.Instance.AddLog("九点标定完成");
                 // 恢复默认
                 PlcControl.Instance.NineCaliNum = 0;
             }
