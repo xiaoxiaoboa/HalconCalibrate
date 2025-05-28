@@ -13,16 +13,12 @@ public partial class Main : Form
     private Logs? _logs;
 
 
-    private double _scale = 1.0;
-    private double _zoomFactor = 1.1;
-
-    private (HalconPorjects?, UserControl) _currentPorject;
+    private (HalconPorjects?, UserControl) _currentProject;
 
     public Main()
     {
         InitializeComponent();
         _window = hSmartWindowControl1.HalconWindow;
-        
     }
 
     private void Main_Load(object sender, EventArgs e)
@@ -54,12 +50,12 @@ public partial class Main : Form
     // 相机连接
     private void connectCamera_Click(object sender, EventArgs e)
     {
+        // 连接按钮关闭
+        connectCamera.Enabled = false;
         if (CameraCtrl.Instance.Connect(out var msg))
         {
             Logger.Instance.AddLog("相机连接成功");
 
-            // 连接按钮关闭
-            connectCamera.Enabled = false;
             // 断开按钮 开启
             disconnectCamera.Enabled = true;
             // 指示灯
@@ -69,7 +65,9 @@ public partial class Main : Form
         }
         else
         {
-            Logger.Instance.AddLog($"相机连接失败：{msg}");
+            connectCamera.Enabled = true;
+            Logger.Instance.AddLog($"相机连接失败：{msg}", LogLevel.Error);
+            MessageBox.Show(@$"相机连接失败：{msg}");
         }
     }
 
@@ -83,7 +81,7 @@ public partial class Main : Form
         }
         catch (Exception exception)
         {
-            Logger.Instance.AddLog($"拍照失败：{exception.Message}");
+            Logger.Instance.AddLog($"拍照失败：{exception.Message}", LogLevel.Error);
         }
     }
 
@@ -124,7 +122,7 @@ public partial class Main : Form
         }
         catch (Exception exception)
         {
-            Logger.Instance.AddLog(exception.Message);
+            Logger.Instance.AddLog(exception.Message, LogLevel.Error);
             MessageBox.Show(exception.Message);
         }
     }
@@ -142,15 +140,15 @@ public partial class Main : Form
     // 切换项目通用函数
     private void SwitchProject(UserControl control, HalconPorjects type)
     {
-        if (_currentPorject.Item1 != type)
+        if (_currentProject.Item1 != type)
         {
-            _currentPorject.Item2?.Dispose();
+            _currentProject.Item2?.Dispose();
             control.Parent = panel2;
             control.Dock = DockStyle.Fill;
 
             // 更新状态
-            _currentPorject.Item1 = HalconPorjects.NinePointCalibration;
-            _currentPorject.Item2 = control;
+            _currentProject.Item1 = HalconPorjects.NinePointCalibration;
+            _currentProject.Item2 = control;
         }
     }
 

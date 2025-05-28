@@ -69,13 +69,14 @@ public class CameraCtrl
         }
     }
 
+    // 拍照
     public void Capture()
     {
         try
         {
-            HFrameGrabber?.GrabImageStart(-1.0);
             if (HFrameGrabber == null) throw new Exception("相机未初始化");
-
+            
+            HFrameGrabber.GrabImageStart(-1.0);
             Image = HFrameGrabber.GrabImageAsync(-1.0);
 
             CapturedCompleted?.Invoke(this, EventArgs.Empty);

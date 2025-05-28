@@ -72,16 +72,7 @@ public partial class Calibration : UserControl
         {
             if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
 
-            HImage grayImage = CameraCtrl.Instance.Image.Rgb1ToGray();
-            HRegion thresholdRegion = grayImage.Threshold(ThresholdMin, ThresholdMax);
-            HRegion connectionRegion = thresholdRegion.Connection();
-            HRegion selectRegion = connectionRegion.SelectShape(Feature, Operator, SelectShapeMin, SelectShapeMax);
-            selectRegion.AreaCenter(out HTuple row, out HTuple column);
-
-            // 图像加载到控件
-            _window?.ClearWindow();
-            grayImage.DispObj(_window);
-            selectRegion.DispObj(_window);
+            var (row, column) = HandleThreshold();
 
             // 保存像素坐标
             _pixelRow.Append(row);
@@ -100,7 +91,7 @@ public partial class Calibration : UserControl
             }
             catch (Exception exception)
             {
-                RunOnUIThread(() => Logger.Instance.AddLog($"写入PLC失败：{exception.Message}"));
+                RunOnUIThread(() => Logger.Instance.AddLog($"写入PLC失败：{exception.Message}", LogLevel.Error));
             }
 
 
@@ -109,24 +100,54 @@ public partial class Calibration : UserControl
                 // 点对仿射
                 CameraCtrl.Instance.HomMat2D.VectorToHomMat2d(_pixelRow, _pixelColumn, _realRow, _realColumn);
 
+
                 // 停止监听
                 PlcControl.Instance.StopListener();
 
-                Logger.Instance.AddLog("九点标定完成");
+                RunOnUIThread(() => Logger.Instance.AddLog("九点标定完成"));
+
                 // 恢复默认
                 PlcControl.Instance.NineCaliNum = 0;
             }
         }
         catch (Exception exception)
         {
-            Logger.Instance.AddLog($"拍照后的处理操作失败：{exception.Message}");
-            MessageBox.Show($@"拍照后的处理操作失败：{exception.Message}");
+            RunOnUIThread(() => Logger.Instance.AddLog($"九点标定操作失败：{exception.Message}", LogLevel.Error));
+            MessageBox.Show($@"九点标定操作失败：{exception.Message}");
         }
     }
 
+    // 应用属性
     private void button1_Click(object sender, EventArgs e)
     {
-        OnCaptured(sender, e);
+        HandleThreshold();
+    }
+
+    // 阈值分割
+    private (HTuple, HTuple) HandleThreshold()
+    {
+        try
+        {
+            if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
+            HImage grayImage = CameraCtrl.Instance.Image.Rgb1ToGray();
+            HRegion thresholdRegion = grayImage.Threshold(ThresholdMin, ThresholdMax);
+            HRegion connectionRegion = thresholdRegion.Connection();
+            HRegion selectRegion = connectionRegion.SelectShape(Feature, Operator, SelectShapeMin, SelectShapeMax);
+            selectRegion.AreaCenter(out HTuple row, out HTuple column);
+
+            // 图像加载到控件
+            _window?.ClearWindow();
+            grayImage.DispObj(_window);
+            selectRegion.DispObj(_window);
+            return (row, column);
+        }
+        catch (Exception exception)
+        {
+            RunOnUIThread(() => Logger.Instance.AddLog($"图像处理操作失败：{exception.Message}", LogLevel.Error));
+            MessageBox.Show($@"图像处理操作失败：{exception.Message}");
+        }
+
+        return (new HTuple(), new HTuple());
     }
 
     private void button2_Click(object sender, EventArgs e)
@@ -216,7 +237,7 @@ public partial class Calibration : UserControl
         }
         catch (Exception exception)
         {
-            Logger.Instance.AddLog($"监听失败：{exception.Message}");
+            Logger.Instance.AddLog($"监听失败：{exception.Message}", LogLevel.Error);
             MessageBox.Show($@"监听失败：{exception.Message}");
         }
     }
@@ -258,7 +279,7 @@ public partial class Calibration : UserControl
         }
         catch (Exception exception)
         {
-            RunOnUIThread(() => Logger.Instance.AddLog($"PLC监听失败：{exception.Message}"));
+            RunOnUIThread(() => Logger.Instance.AddLog($"PLC监听失败：{exception.Message}", LogLevel.Error));
 
             MessageBox.Show($@"PLC监听失败：{exception.Message}");
         }

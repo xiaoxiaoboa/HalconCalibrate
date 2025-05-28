@@ -8,9 +8,9 @@ namespace HalconCalibration.Common;
 
 public class Logger
 {
-    private static readonly Logger _instance = new Logger();
-    private readonly BindingList<ILog> _bindingLogList = new BindingList<ILog>();
-    private readonly object _lock = new object();
+    private static readonly Logger _instance = new();
+    private readonly BindingList<ILog> _bindingLogList = new();
+    private readonly object _lock = new();
 
     public static Logger Instance => _instance;
 
@@ -37,7 +37,7 @@ public class Logger
     /// <param name="level">日志级别，默认值为 LogLevel.Info，表示信息类型的日志。</param>
     public void AddLog(string message, LogLevel level = LogLevel.Info)
     {
-        if (message == null) return;
+        if (string.IsNullOrEmpty(message)) return;
         // 格式化时间字符串
         var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -63,17 +63,15 @@ public class Logger
 
         try
         {
-            using (StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8))
-            {
-                await sw.WriteLineAsync("时间,等级,信息");
+            await using StreamWriter sw = new StreamWriter(filename, false, Encoding.UTF8);
+            await sw.WriteLineAsync("时间,等级,信息");
 
-                foreach (var log in logsCopy)
-                {
-                    var timestamp = EscapeCsvField(log.TimeStamp);
-                    var level = EscapeCsvField(log.Level.ToString());
-                    var message = EscapeCsvField(log.Message);
-                    await sw.WriteLineAsync($"{timestamp},{level},{message}");
-                }
+            foreach (var log in logsCopy)
+            {
+                var timestamp = EscapeCsvField(log.TimeStamp);
+                var level = EscapeCsvField(log.Level.ToString());
+                var message = EscapeCsvField(log.Message);
+                await sw.WriteLineAsync($"{timestamp},{level},{message}");
             }
 
             return "导出日志成功";
