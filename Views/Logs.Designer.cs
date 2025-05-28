@@ -106,10 +106,7 @@ partial class Logs
     private System.Windows.Forms.DataGridView dataGridView1;
 
     #endregion
-
-    private DataGridViewTextBoxColumn Column1;
-    private DataGridViewTextBoxColumn Column2;
-    private DataGridViewTextBoxColumn Column3;
+    
     private Panel panel1;
     private MenuStrip menuStrip1;
     private ToolStripMenuItem exportLogs;

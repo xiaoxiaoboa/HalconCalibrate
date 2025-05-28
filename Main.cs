@@ -137,11 +137,22 @@ public partial class Main : Form
         SwitchProject(cali, HalconPorjects.NinePointCalibration);
     }
 
+    // 切换到测量项目
+    private void measure_Click(object sender, EventArgs e)
+    {
+        if (_window == null) return;
+        var m = new MeasureDimensions();
+        groupBox3.Text = @"项目-尺寸测量";
+
+        SwitchProject(m, HalconPorjects.MeasureDimension);
+    }
+
     // 切换项目通用函数
     private void SwitchProject(UserControl control, HalconPorjects type)
     {
         if (_currentProject.Item1 != type)
         {
+            // 切换项目时，销毁上一个
             _currentProject.Item2?.Dispose();
             control.Parent = panel2;
             control.Dock = DockStyle.Fill;

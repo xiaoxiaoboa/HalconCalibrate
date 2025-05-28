@@ -29,6 +29,9 @@
         <Compile Update="Views\HalconProjects\Template.cs">
             <SubType>UserControl</SubType>
         </Compile>
+        <Compile Update="Views\HalconProjects\MeasureDimensions.cs">
+          <SubType>UserControl</SubType>
+        </Compile>
     </ItemGroup>
 
 </Project>

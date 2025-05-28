@@ -11,7 +11,7 @@ namespace HalconCalibration.Views.HalconProjects;
  */
 
 [ToolboxItem(false)]
-public partial class Template : UserControl
+public partial class MeasureDimensions : UserControl
 {
     private double ThresholdMin { get; set; } = 125.0;
     private double ThresholdMax { get; set; } = 255.0;
@@ -20,7 +20,7 @@ public partial class Template : UserControl
 
     private string Feature { get; set; } = nameof(SelectShapeFeatures.area);
     private string Operator { get; set; } = nameof(SelectShapeOperation.and);
-    public Template()
+    public MeasureDimensions()
     {
         InitializeComponent();
         
@@ -36,7 +36,7 @@ public partial class Template : UserControl
         selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
     }
     
-    private void Template_Load(object sender, EventArgs e)
+    private void MeasureDimensions_Load(object sender, EventArgs e)
     {
         // 控制控件宽度
         tableLayoutPanel1.Width = (int)(panel3.Width * 0.95);
@@ -54,7 +54,7 @@ public partial class Template : UserControl
 
     private void thresholdMin_TextChanged(object sender, EventArgs e)
     {
-        if (double.TryParse(thresholdMin.Text, out double result))
+        if (double.TryParse((string?)thresholdMin.Text, out double result))
         {
             ThresholdMin = result;
         }
@@ -62,7 +62,7 @@ public partial class Template : UserControl
 
     private void thresholdMax_TextChanged(object sender, EventArgs e)
     {
-        if (double.TryParse(thresholdMax.Text, out double result))
+        if (double.TryParse((string?)thresholdMax.Text, out double result))
         {
             ThresholdMax = result;
         }
@@ -70,7 +70,7 @@ public partial class Template : UserControl
 
     private void selectShapeMin_TextChanged(object sender, EventArgs e)
     {
-        if (double.TryParse(selectShapeMin.Text, out double result))
+        if (double.TryParse((string?)selectShapeMin.Text, out double result))
         {
             SelectShapeMin = result;
         }
@@ -78,7 +78,7 @@ public partial class Template : UserControl
 
     private void selectShapeMax_TextChanged(object sender, EventArgs e)
     {
-        if (double.TryParse(selectShapeMax.Text, out double result))
+        if (double.TryParse((string?)selectShapeMax.Text, out double result))
         {
             SelectShapeMax = result;
         }

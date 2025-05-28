@@ -2,5 +2,6 @@
 
 public enum HalconPorjects
 {
-    NinePointCalibration
+    NinePointCalibration,
+    MeasureDimension
 }

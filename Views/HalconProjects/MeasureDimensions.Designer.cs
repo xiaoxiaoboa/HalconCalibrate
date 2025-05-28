@@ -2,7 +2,7 @@
 
 namespace HalconCalibration.Views.HalconProjects;
 
-partial class Template
+partial class MeasureDimensions
 {
     /// <summary> 
     /// Required designer variable.
@@ -419,13 +419,13 @@ partial class Template
         resetBtn.UseVisualStyleBackColor = true;
         resetBtn.Click += resetBtn_Click;
         // 
-        // Template
+        // MeasureDimensions
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         Controls.Add(panel1);
         Size = new System.Drawing.Size(312, 371);
-        Load += Template_Load;
+        Load += MeasureDimensions_Load;
         panel1.ResumeLayout(false);
         panel3.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);

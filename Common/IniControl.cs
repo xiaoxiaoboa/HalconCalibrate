@@ -66,7 +66,7 @@ namespace HalconCalibration.Common
         /// <returns>返回与指定字段和键对应的配置值。如果未找到，则返回 null。</returns>
         public string Read(string field, string key)
         {
-            return _data?[field][key];
+            return _data?[field][key]!;
         }
 
         // 写入ini值

@@ -284,4 +284,5 @@ public partial class Calibration : UserControl
             MessageBox.Show($@"PLC监听失败：{exception.Message}");
         }
     }
+    
 }

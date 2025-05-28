@@ -154,18 +154,5 @@ namespace HalconCalibration.Common
                 throw new Exception("PLC读取数据失败", exception);
             }
         }
-
-        // 处理偏移
-        /// <summary>
-        /// 处理偏移计算并将结果写入PLC。
-        /// 该方法根据当前的测量编号（MeasureNum）和识别工具块的运行状态，计算角度、X轴和Y轴的偏移量。
-        /// 如果识别工具块运行失败或结果不符合预期，则抛出异常。
-        /// 计算完成后，将偏移值写入PLC，并更新确认编号。
-        /// </summary>
-        /// <returns>无返回值。</returns>
-        /// <exception cref="Exception">当识别工具块运行失败或偏移计算过程中发生错误时抛出。</exception>
-        public async Task HandleOffset()
-        {
-        }
     }
 }
