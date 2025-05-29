@@ -141,7 +141,7 @@ public partial class Main : Form
     private void measure_Click(object sender, EventArgs e)
     {
         if (_window == null) return;
-        var m = new MeasureDimensions();
+        var m = new MeasureDimensions(_window);
         groupBox3.Text = @"项目-尺寸测量";
 
         SwitchProject(m, HalconPorjects.MeasureDimension);
@@ -158,7 +158,7 @@ public partial class Main : Form
             control.Dock = DockStyle.Fill;
 
             // 更新状态
-            _currentProject.Item1 = HalconPorjects.NinePointCalibration;
+            _currentProject.Item1 = type;
             _currentProject.Item2 = control;
         }
     }

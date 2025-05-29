@@ -1,29 +1,29 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
+using HalconCalibration.Common;
 using HalconCalibration.Enums;
+using HalconDotNet;
 
 namespace HalconCalibration.Views.HalconProjects;
-
-/***
- *  此类作为模板类使用
- *  非必要不修改
- *  使用时复制一份再使用
- */
 
 [ToolboxItem(false)]
 public partial class MeasureDimensions : UserControl
 {
+    private HWindow? _window;
     private double ThresholdMin { get; set; } = 125.0;
     private double ThresholdMax { get; set; } = 255.0;
     private double SelectShapeMin { get; set; } = 150;
     private double SelectShapeMax { get; set; } = 9999;
+    
 
     private string Feature { get; set; } = nameof(SelectShapeFeatures.area);
     private string Operator { get; set; } = nameof(SelectShapeOperation.and);
-    public MeasureDimensions()
+
+    public MeasureDimensions(HWindow hWindow)
     {
+        _window = hWindow;
         InitializeComponent();
-        
+
         featuresComboBox.DataSource = Enum.GetNames(typeof(SelectShapeFeatures));
         operatorComboBox.DataSource = Enum.GetNames(typeof(SelectShapeOperation));
         featuresComboBox.SelectedItem = nameof(SelectShapeFeatures.area);
@@ -35,7 +35,47 @@ public partial class MeasureDimensions : UserControl
         selectShapeMin.Text = SelectShapeMin.ToString(CultureInfo.CurrentCulture);
         selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
     }
-    
+
+    // 恢复控件到UI线程执行
+    private void RunOnUIThread(Action action)
+    {
+        if (InvokeRequired)
+        {
+            Invoke(action);
+        }
+        else
+        {
+            action();
+        }
+    }
+
+    // 阈值分割
+    private (HTuple, HTuple) HandleThreshold()
+    {
+        try
+        {
+            if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
+            HImage grayImage = CameraCtrl.Instance.Image.Rgb1ToGray();
+            HRegion thresholdRegion = grayImage.Threshold(ThresholdMin, ThresholdMax);
+            HRegion connectionRegion = thresholdRegion.Connection();
+            HRegion selectRegion = connectionRegion.SelectShape(Feature, Operator, SelectShapeMin, SelectShapeMax);
+            selectRegion.AreaCenter(out HTuple row, out HTuple column);
+
+            // 图像加载到控件
+            _window?.ClearWindow();
+            grayImage.DispObj(_window);
+            selectRegion.DispObj(_window);
+            return (row, column);
+        }
+        catch (Exception exception)
+        {
+            RunOnUIThread(() => Logger.Instance.AddLog($"图像处理操作失败：{exception.Message}", LogLevel.Error));
+            MessageBox.Show($@"图像处理操作失败：{exception.Message}");
+        }
+
+        return (new HTuple(), new HTuple());
+    }
+
     private void MeasureDimensions_Load(object sender, EventArgs e)
     {
         // 控制控件宽度
@@ -44,12 +84,11 @@ public partial class MeasureDimensions : UserControl
 
     private void applyBtn_Click(object sender, EventArgs e)
     {
-
+        HandleThreshold();
     }
 
     private void resetBtn_Click(object sender, EventArgs e)
     {
-
     }
 
     private void thresholdMin_TextChanged(object sender, EventArgs e)
@@ -109,6 +148,4 @@ public partial class MeasureDimensions : UserControl
             MessageBox.Show(@"选择项时出错！");
         }
     }
-
-    
 }

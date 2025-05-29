@@ -11,7 +11,7 @@ namespace HalconCalibration.Views.HalconProjects;
 [ToolboxItem(false)]
 public partial class Calibration : UserControl
 {
-    private HWindow _window;
+    private HWindow? _window;
 
     private double ThresholdMin { get; set; } = 125.0;
     private double ThresholdMax { get; set; } = 255.0;

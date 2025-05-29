@@ -55,8 +55,7 @@ namespace HalconCalibration.Common
         public void StartListener(int interval, Func<Task> callback)
         {
             if (_timer != null) return;
-            // TODO 开发阶段，暂时注释
-            // if (!IsConnected) throw new Exception("PLC 未连接");
+            if (!IsConnected) throw new Exception("PLC 未连接");
 
             _timer = new Timer();
             _timer.Interval = interval; // 每 1000ms 读取一次
