@@ -59,6 +59,9 @@ public partial class Calibration : UserControl
             // 保存像素坐标
             _pixelRow.Append(row);
             _pixelColumn.Append(column);
+            // 保存物理坐标
+            _realRow.Append(PlcControl.Instance.RealX);
+            _realColumn.Append(PlcControl.Instance.RealY);
 
             RunOnUIThread(() => Logger.Instance.AddLog($"像素坐标，x：{row}，y：{column}"));
             RunOnUIThread(() =>
@@ -82,11 +85,12 @@ public partial class Calibration : UserControl
                 // 点对仿射
                 CameraCtrl.Instance.HomMat2D.VectorToHomMat2d(_pixelRow, _pixelColumn, _realRow, _realColumn);
 
-
                 // 停止监听
-                PlcControl.Instance.StopListener();
-
-                RunOnUIThread(() => Logger.Instance.AddLog("九点标定完成"));
+                RunOnUIThread(() =>
+                {
+                    stopListen_Click(sender, e);
+                    Logger.Instance.AddLog("九点标定完成");
+                });
 
                 // 恢复默认
                 PlcControl.Instance.NineCaliNum = 0;
@@ -125,7 +129,7 @@ public partial class Calibration : UserControl
     }
 
     // 停止监听
-    private void stopListen_Click(object sender, EventArgs e)
+    private void stopListen_Click(object? sender, EventArgs e)
     {
         PlcControl.Instance.StopListener();
         CameraCtrl.Instance.CapturedCompleted -= OnCaptured;
@@ -150,11 +154,6 @@ public partial class Calibration : UserControl
                 RunOnUIThread(() => Logger.Instance.AddLog($"第{nineCaliNum}次执行开始"));
 
                 PlcControl.Instance.NineCaliNum = nineCaliNum.ConvertToInt();
-
-                // 保存物理坐标
-                _realRow.Append(x);
-                _realColumn.Append(y);
-
                 // 读取到数据后执行拍照
                 CameraCtrl.Instance.Capture();
             }

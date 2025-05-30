@@ -28,8 +28,8 @@ public class CameraCtrl
     public double Generic { get; set; } = -1;
     public string ExternalTrigger { get; set; } = "false";
     public string CameraType { get; set; } = "default";
-    public string Device { get; set; } = "34bd2022f532_Hikrobot_MVCS06010GC";
-    // public string Device { get; set; } = "34bd202ffa29_Hikrobot_MVCS06010GC";
+    // public string Device { get; set; } = "34bd2022f532_Hikrobot_MVCS06010GC";
+    public string Device { get; set; } = "34bd202ffa29_Hikrobot_MVCS06010GC";
     public int Port { get; set; }
     public int LineIn { get; set; } = -1;
 
