@@ -13,17 +13,13 @@ public partial class Calibration : UserControl
 {
     private HWindow? _window;
 
-    private double ThresholdMin { get; set; } = 125.0;
-    private double ThresholdMax { get; set; } = 255.0;
-    private double SelectShapeMin { get; set; } = 150;
-    private double SelectShapeMax { get; set; } = 9999;
+    private Threshold? _threshold;
 
-    private string Feature { get; set; } = nameof(SelectShapeFeatures.area);
-    private string Operator { get; set; } = nameof(SelectShapeOperation.and);
-
+    // 像素坐标的元组。 
     private readonly HTuple _pixelRow = new();
     private readonly HTuple _pixelColumn = new();
 
+    // 机械坐标数组；按照九点标定顺序一次添加
     private readonly HTuple _realRow = new();
     private readonly HTuple _realColumn = new();
 
@@ -33,23 +29,6 @@ public partial class Calibration : UserControl
         InitializeComponent();
 
         _window = hWindow;
-
-        featuresComboBox.DataSource = Enum.GetNames(typeof(SelectShapeFeatures));
-        operatorComboBox.DataSource = Enum.GetNames(typeof(SelectShapeOperation));
-        featuresComboBox.SelectedItem = nameof(SelectShapeFeatures.area);
-        operatorComboBox.SelectedItem = nameof(SelectShapeOperation.and);
-
-        thresholdMin.Text = ThresholdMin.ToString(CultureInfo.CurrentCulture);
-        thresholdMax.Text = ThresholdMax.ToString(CultureInfo.CurrentCulture);
-
-        selectShapeMin.Text = SelectShapeMin.ToString(CultureInfo.CurrentCulture);
-        selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
-    }
-
-    private void Calibration_Load(object sender, EventArgs e)
-    {
-        // 控制控件宽度
-        tableLayoutPanel1.Width = (int)(panel3.Width * 0.95);
     }
 
     // 恢复控件到UI线程执行
@@ -72,7 +51,9 @@ public partial class Calibration : UserControl
         {
             if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
 
-            var (row, column) = HandleThreshold();
+            if (_threshold == null) return;
+            // 执行halcon,获取 像素坐标
+            var (row, column) = _threshold.HandleThreshold();
 
             // 保存像素坐标
             _pixelRow.Append(row);
@@ -117,121 +98,21 @@ public partial class Calibration : UserControl
         }
     }
 
-    // 应用属性
-    private void button1_Click(object sender, EventArgs e)
-    {
-        HandleThreshold();
-    }
 
-    // 阈值分割
-    private (HTuple, HTuple) HandleThreshold()
-    {
-        try
-        {
-            if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
-            HImage grayImage = CameraCtrl.Instance.Image.Rgb1ToGray();
-            HRegion thresholdRegion = grayImage.Threshold(ThresholdMin, ThresholdMax);
-            HRegion connectionRegion = thresholdRegion.Connection();
-            HRegion selectRegion = connectionRegion.SelectShape(Feature, Operator, SelectShapeMin, SelectShapeMax);
-            selectRegion.AreaCenter(out HTuple row, out HTuple column);
-
-            // 图像加载到控件
-            _window?.ClearWindow();
-            grayImage.DispObj(_window);
-            selectRegion.DispObj(_window);
-            return (row, column);
-        }
-        catch (Exception exception)
-        {
-            RunOnUIThread(() => Logger.Instance.AddLog($"图像处理操作失败：{exception.Message}", LogLevel.Error));
-            MessageBox.Show($@"图像处理操作失败：{exception.Message}");
-        }
-
-        return (new HTuple(), new HTuple());
-    }
-
-    private void button2_Click(object sender, EventArgs e)
-    {
-        ThresholdMin = 125.0;
-        ThresholdMax = 255.0;
-        SelectShapeMin = 150;
-        SelectShapeMax = 9999;
-        Feature = nameof(SelectShapeFeatures.area);
-        Operator = nameof(SelectShapeOperation.and);
-
-        thresholdMin.Text = ThresholdMin.ToString(CultureInfo.CurrentCulture);
-        thresholdMax.Text = ThresholdMax.ToString(CultureInfo.CurrentCulture);
-        selectShapeMin.Text = SelectShapeMin.ToString(CultureInfo.CurrentCulture);
-        selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
-    }
-
-
-    private void featuresComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-    {
-        var item = featuresComboBox.SelectedItem;
-        if (item is string s)
-        {
-            Feature = s;
-        }
-        else
-        {
-            MessageBox.Show(@"选择项时出错！");
-        }
-    }
-
-
-    private void operatorComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-    {
-        var item = operatorComboBox.SelectedItem;
-        if (item is string s)
-        {
-            Operator = s;
-        }
-        else
-        {
-            MessageBox.Show(@"选择项时出错！");
-        }
-    }
-
-    private void thresholdMin_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse(thresholdMin.Text, out double result))
-        {
-            ThresholdMin = result;
-        }
-    }
-
-    private void thresholdMax_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse(thresholdMax.Text, out double result))
-        {
-            ThresholdMax = result;
-        }
-    }
-
-    private void selectShapeMin_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse(selectShapeMin.Text, out double result))
-        {
-            SelectShapeMin = result;
-        }
-    }
-
-    private void selectShapeMax_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse(selectShapeMax.Text, out double result))
-        {
-            SelectShapeMax = result;
-        }
-    }
-
-
-    // 开启监听
+    /// 开始九点标定
+    /// 1：监听：是否开启九点标定
+    /// 2；两个集合：一个像素集合，一个机械集合
+    /// 3：监听 进行到第几次标定
+    /// 4：每次标定时，分别获取像素坐标和机械坐标，分别添加到 集合中
+    /// 5：最后：建立 仿射关系：像素集合与机械集合的仿射关系。
+    /// 6：测试：输入像素坐标，使用仿射矩阵 求对应的机械坐标
     private void listenPlc_Click(object sender, EventArgs e)
     {
         try
         {
+            // 监听进行第几次九点标定，触发拍照，记录机械坐标位置
             PlcControl.Instance.StartListener(1000, OnPlcListening);
+            // 监听拍照事件，事件中：halcon算法，为了获取像素坐标
             CameraCtrl.Instance.CapturedCompleted += OnCaptured;
             Logger.Instance.AddLog("=========监听开始，1000毫秒读取一次=========");
         }
@@ -262,19 +143,19 @@ public partial class Calibration : UserControl
             PlcControl.Instance.RealY = y.ConvertToFloat();
 
             var nineCaliNum = await PlcControl.Instance.Read<uint>(PlcDataAddress.NineCaliNum.GetAddress());
-            Console.WriteLine(nineCaliNum);
             // 限制
             if (PlcControl.Instance.NineCaliNum != nineCaliNum && nineCaliNum != 0)
             {
                 RunOnUIThread(() => Logger.Instance.AddLog($"第{nineCaliNum}次执行开始"));
 
                 PlcControl.Instance.NineCaliNum = nineCaliNum.ConvertToInt();
-                // 读取到数据后执行拍照
-                CameraCtrl.Instance.Capture();
 
                 // 保存物理坐标
                 _realRow.Append(x);
                 _realColumn.Append(y);
+                
+                // 读取到数据后执行拍照
+                CameraCtrl.Instance.Capture();
             }
         }
         catch (Exception exception)
@@ -284,5 +165,18 @@ public partial class Calibration : UserControl
             MessageBox.Show($@"PLC监听失败：{exception.Message}");
         }
     }
-    
+
+    private void thresholdBtn_Click(object sender, EventArgs e)
+    {
+        if (_threshold == null || _threshold.IsDisposed)
+        {
+            if (_window == null) return;
+            _threshold = new Threshold(_window);
+            _threshold.Show();
+        }
+        else
+        {
+            _threshold.Close();
+        }
+    }
 }

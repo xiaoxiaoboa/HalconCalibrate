@@ -26,11 +26,14 @@
         <Compile Update="Views\HalconProjects\Calibration.cs">
             <SubType>UserControl</SubType>
         </Compile>
-        <Compile Update="Views\HalconProjects\Template.cs">
-            <SubType>UserControl</SubType>
+        <Compile Update="Views\HalconProjects\Threshold.cs">
+          <SubType>Form</SubType>
         </Compile>
-        <Compile Update="Views\HalconProjects\MeasureDimensions.cs">
+        <Compile Update="Views\HalconProjects\MeasureDimensions\MeasureDimensions.cs">
           <SubType>UserControl</SubType>
+        </Compile>
+        <Compile Update="Views\HalconProjects\MeasureDimensions\Config.cs">
+          <SubType>Form</SubType>
         </Compile>
     </ItemGroup>
 

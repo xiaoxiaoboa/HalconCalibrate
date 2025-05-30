@@ -2,6 +2,7 @@ using HalconCalibration.Common;
 using HalconCalibration.Enums;
 using HalconCalibration.Views;
 using HalconCalibration.Views.HalconProjects;
+using HalconCalibration.Views.HalconProjects.MeasureDimensions;
 using HalconDotNet;
 
 namespace HalconCalibration;
@@ -11,6 +12,7 @@ public partial class Main : Form
     private HWindow? _window;
 
     private Logs? _logs;
+    private Threshold? _threshold;
 
 
     private (HalconPorjects?, UserControl) _currentProject;
@@ -19,6 +21,7 @@ public partial class Main : Form
     {
         InitializeComponent();
         _window = hSmartWindowControl1.HalconWindow;
+        
     }
 
     private void Main_Load(object sender, EventArgs e)
@@ -111,7 +114,9 @@ public partial class Main : Form
     {
         try
         {
+            // PlcControl.Instance.Connect();
             await Task.Run(() => { PlcControl.Instance.Connect(); });
+  
             if (PlcControl.Instance.IsConnected)
             {
                 indicatorLight2.IsOn = !indicatorLight2.IsOn;
@@ -119,6 +124,8 @@ public partial class Main : Form
                 disconnectPlc.Enabled = true;
                 Logger.Instance.AddLog("PLC连接成功");
             }
+       
+            
         }
         catch (Exception exception)
         {
@@ -133,7 +140,7 @@ public partial class Main : Form
         if (_window == null) return;
         var cali = new Calibration(_window);
         groupBox3.Text = @"项目-九点标定";
-
+        
         SwitchProject(cali, HalconPorjects.NinePointCalibration);
     }
 
@@ -192,9 +199,9 @@ public partial class Main : Form
         Logger.Instance.AddLog("PLC断开");
     }
 
-    private void config_Click(object sender, EventArgs e)
+    private void systemConfig_Click(object sender, EventArgs e)
     {
-        var sysConfig = new Config();
+        var sysConfig = new SystemConfig();
         sysConfig.Show();
     }
 

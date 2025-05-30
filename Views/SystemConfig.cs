@@ -2,8 +2,8 @@
 using HalconCalibration.Common;
 
 namespace HalconCalibration.Views {
-    public partial class Config : Form {
-        public Config() {
+    public partial class SystemConfig : Form {
+        public SystemConfig() {
             InitializeComponent();
 
             try {

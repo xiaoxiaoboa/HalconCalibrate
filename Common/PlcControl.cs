@@ -6,7 +6,8 @@ namespace HalconCalibration.Common
 {
     public class PlcControl
     {
-        private static readonly Lazy<PlcControl> _instance = new(() => new PlcControl());
+        private static readonly Lazy<PlcControl> _instance = new (() => new PlcControl());
+        
         private Plc? _plc;
 
         private Timer? _timer;
@@ -84,13 +85,20 @@ namespace HalconCalibration.Common
         /// </summary>
         public void Connect()
         {
-            var ip = IniControl.Instance.Read("PlcConfig", "IP");
-            var port = IniControl.Instance.Read("PlcConfig", "Port");
-            if (_plc is { IsConnected: true })
-                return;
-            _plc = new Plc(CpuType.S71500, ip, Convert.ToInt32(port), 0, 1);
+            try
+            {
+                var ip = IniControl.Instance.Read("PlcConfig", "IP");
+                var port = IniControl.Instance.Read("PlcConfig", "Port");
+                if (_plc is { IsConnected: true })
+                    return;
+                _plc = new Plc(CpuType.S71500, ip, Convert.ToInt32(port), 0, 1);
 
-            _plc.Open();
+                _plc.Open();
+            }
+            catch (Exception exception)
+            {
+                throw new Exception(exception.Message);
+            }
         }
 
         // 断开

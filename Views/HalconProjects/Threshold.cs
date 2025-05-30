@@ -1,28 +1,36 @@
-﻿using System.ComponentModel;
-using System.Globalization;
+﻿using System.Globalization;
 using HalconCalibration.Common;
 using HalconCalibration.Enums;
 using HalconDotNet;
 
 namespace HalconCalibration.Views.HalconProjects;
 
-[ToolboxItem(false)]
-public partial class MeasureDimensions : UserControl
+public partial class Threshold : Form
 {
     private HWindow? _window;
+
     private double ThresholdMin { get; set; } = 125.0;
     private double ThresholdMax { get; set; } = 255.0;
     private double SelectShapeMin { get; set; } = 150;
     private double SelectShapeMax { get; set; } = 9999;
-    
 
     private string Feature { get; set; } = nameof(SelectShapeFeatures.area);
     private string Operator { get; set; } = nameof(SelectShapeOperation.and);
 
-    public MeasureDimensions(HWindow hWindow)
+    private HRegion? _hRegion;
+
+    public HRegion? SelectRegion
     {
-        _window = hWindow;
+        get => _hRegion;
+        private set => _hRegion = value;
+    }
+
+
+    public Threshold(HWindow hWindow)
+    {
         InitializeComponent();
+
+        _window = hWindow;
 
         featuresComboBox.DataSource = Enum.GetNames(typeof(SelectShapeFeatures));
         operatorComboBox.DataSource = Enum.GetNames(typeof(SelectShapeOperation));
@@ -50,7 +58,7 @@ public partial class MeasureDimensions : UserControl
     }
 
     // 阈值分割
-    private (HTuple, HTuple) HandleThreshold()
+    public (HTuple, HTuple) HandleThreshold()
     {
         try
         {
@@ -60,6 +68,8 @@ public partial class MeasureDimensions : UserControl
             HRegion connectionRegion = thresholdRegion.Connection();
             HRegion selectRegion = connectionRegion.SelectShape(Feature, Operator, SelectShapeMin, SelectShapeMax);
             selectRegion.AreaCenter(out HTuple row, out HTuple column);
+
+            SelectRegion = selectRegion;
 
             // 图像加载到控件
             _window?.ClearWindow();
@@ -76,12 +86,7 @@ public partial class MeasureDimensions : UserControl
         return (new HTuple(), new HTuple());
     }
 
-    private void MeasureDimensions_Load(object sender, EventArgs e)
-    {
-        // 控制控件宽度
-        tableLayoutPanel1.Width = (int)(panel3.Width * 0.95);
-    }
-
+    // 应用
     private void applyBtn_Click(object sender, EventArgs e)
     {
         HandleThreshold();
@@ -89,38 +94,17 @@ public partial class MeasureDimensions : UserControl
 
     private void resetBtn_Click(object sender, EventArgs e)
     {
-    }
+        ThresholdMin = 125.0;
+        ThresholdMax = 255.0;
+        SelectShapeMin = 150;
+        SelectShapeMax = 9999;
+        Feature = nameof(SelectShapeFeatures.area);
+        Operator = nameof(SelectShapeOperation.and);
 
-    private void thresholdMin_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse((string?)thresholdMin.Text, out double result))
-        {
-            ThresholdMin = result;
-        }
-    }
-
-    private void thresholdMax_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse((string?)thresholdMax.Text, out double result))
-        {
-            ThresholdMax = result;
-        }
-    }
-
-    private void selectShapeMin_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse((string?)selectShapeMin.Text, out double result))
-        {
-            SelectShapeMin = result;
-        }
-    }
-
-    private void selectShapeMax_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse((string?)selectShapeMax.Text, out double result))
-        {
-            SelectShapeMax = result;
-        }
+        thresholdMin.Text = ThresholdMin.ToString(CultureInfo.CurrentCulture);
+        thresholdMax.Text = ThresholdMax.ToString(CultureInfo.CurrentCulture);
+        selectShapeMin.Text = SelectShapeMin.ToString(CultureInfo.CurrentCulture);
+        selectShapeMax.Text = SelectShapeMax.ToString(CultureInfo.CurrentCulture);
     }
 
     private void featuresComboBox_SelectionChangeCommitted(object sender, EventArgs e)
@@ -136,6 +120,7 @@ public partial class MeasureDimensions : UserControl
         }
     }
 
+
     private void operatorComboBox_SelectionChangeCommitted(object sender, EventArgs e)
     {
         var item = operatorComboBox.SelectedItem;
@@ -146,6 +131,38 @@ public partial class MeasureDimensions : UserControl
         else
         {
             MessageBox.Show(@"选择项时出错！");
+        }
+    }
+
+    private void thresholdMin_TextChanged(object sender, EventArgs e)
+    {
+        if (double.TryParse(thresholdMin.Text, out double result))
+        {
+            ThresholdMin = result;
+        }
+    }
+
+    private void thresholdMax_TextChanged(object sender, EventArgs e)
+    {
+        if (double.TryParse(thresholdMax.Text, out double result))
+        {
+            ThresholdMax = result;
+        }
+    }
+
+    private void selectShapeMin_TextChanged(object sender, EventArgs e)
+    {
+        if (double.TryParse(selectShapeMin.Text, out double result))
+        {
+            SelectShapeMin = result;
+        }
+    }
+
+    private void selectShapeMax_TextChanged(object sender, EventArgs e)
+    {
+        if (double.TryParse(selectShapeMax.Text, out double result))
+        {
+            SelectShapeMax = result;
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 
 namespace HalconCalibration.Views {
-    partial class Config {
+    partial class SystemConfig {
         /// <summary>
         /// Required designer variable.
         /// </summary>
