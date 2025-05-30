@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Views\Logs.cs">
+        <Compile Update="Views\LogForm.cs">
             <SubType>Form</SubType>
         </Compile>
         <Compile Update="Views\HalconProjects\Calibration.cs">

@@ -2,7 +2,7 @@
 
 namespace HalconCalibration.Views;
 
-partial class Logs
+partial class LogForm
 {
     /// <summary>
     /// Required designer variable.
@@ -91,7 +91,7 @@ partial class Logs
         Controls.Add(panel1);
         Controls.Add(menuStrip1);
         MainMenuStrip = menuStrip1;
-        Name = "Logs";
+        Name = "LogForm";
         StartPosition = FormStartPosition.CenterScreen;
         Text = "Logs";
         Load += Logs_Load;

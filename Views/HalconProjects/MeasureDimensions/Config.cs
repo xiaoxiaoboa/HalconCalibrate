@@ -14,13 +14,13 @@ public partial class Config : Form
     private string TransitionValue { get; set; } = nameof(Transition.all);
     private string SelectValue { get; set; } = nameof(Enums.Select.all);
 
-    private HRegion? _selectRegion;
 
-    public Config(HWindow hWindow, HRegion region)
+    
+    public Config(HWindow hWindow)
     {
         InitializeComponent();
         _window = hWindow;
-        _selectRegion = region;
+
 
         interpolationCombobox.DataSource = Enum.GetNames(typeof(Interpolation));
         transitionCombobx.DataSource = Enum.GetNames(typeof(Transition));
@@ -38,12 +38,12 @@ public partial class Config : Form
         if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
 
         // 需要创建一个新region，不然每次执行，region会被GenContourPolygonXld修改
-        HRegion hr = new HRegion(_selectRegion);
+        HRegion hr = new HRegion(ThresholdCtrl.Instance.RegionValue);
 
         HImage image = CameraCtrl.Instance.Image.Rgb1ToGray();
         image.GetImageSize(out HTuple width, out HTuple height);
 
-        if (_selectRegion == null) return;
+        if (ThresholdCtrl.Instance.RegionValue == null) return;
         // 生成最小外接矩形
         hr.SmallestRectangle2(out HTuple row, out HTuple column, out HTuple phi, out HTuple length1,
             out HTuple length2);

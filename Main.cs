@@ -11,8 +11,7 @@ public partial class Main : Form
 {
     private HWindow? _window;
 
-    private Logs? _logs;
-    private Threshold? _threshold;
+    private LogForm? _logForm;
 
 
     private (HalconPorjects?, UserControl) _currentProject;
@@ -97,14 +96,14 @@ public partial class Main : Form
     // 打开日志窗口
     private void displayLogs_Click(object sender, EventArgs e)
     {
-        if (_logs == null || _logs.IsDisposed)
+        if (_logForm == null || _logForm.IsDisposed)
         {
-            _logs = new Logs();
-            _logs.Show();
+            _logForm = new LogForm();
+            _logForm.Show();
         }
         else
         {
-            _logs.Close();
+            _logForm.Close();
         }
     }
 

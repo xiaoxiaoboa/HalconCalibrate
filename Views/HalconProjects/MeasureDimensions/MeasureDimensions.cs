@@ -54,13 +54,13 @@ public partial class MeasureDimensions : UserControl
     {
         if (_config == null || _config.IsDisposed)
         {
-            if (_window == null || _threshold?.SelectRegion == null)
+            if (_window == null)
             {
                 MessageBox.Show(@"先阈值分割");
             }
             else
             {
-                _config = new Config(_window, _threshold.SelectRegion);
+                _config = new Config(_window);
                 _config.Show();
             }
         }

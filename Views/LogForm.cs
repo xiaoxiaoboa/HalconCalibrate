@@ -2,9 +2,9 @@
 
 namespace HalconCalibration.Views;
 
-public partial class Logs : Form
+public partial class LogForm : Form
 {
-    public Logs()
+    public LogForm()
     {
         InitializeComponent();
     }
