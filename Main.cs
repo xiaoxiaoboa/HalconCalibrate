@@ -21,7 +21,6 @@ public partial class Main : Form
     {
         InitializeComponent();
         _window = hSmartWindowControl1.HalconWindow;
-        
     }
 
     private void Main_Load(object sender, EventArgs e)
@@ -116,7 +115,7 @@ public partial class Main : Form
         {
             // PlcControl.Instance.Connect();
             await Task.Run(() => { PlcControl.Instance.Connect(); });
-  
+
             if (PlcControl.Instance.IsConnected)
             {
                 indicatorLight2.IsOn = !indicatorLight2.IsOn;
@@ -124,8 +123,6 @@ public partial class Main : Form
                 disconnectPlc.Enabled = true;
                 Logger.Instance.AddLog("PLC连接成功");
             }
-       
-            
         }
         catch (Exception exception)
         {
@@ -140,6 +137,7 @@ public partial class Main : Form
         if (_window == null) return;
         var cali = new Calibration(_window);
         groupBox3.Text = @"项目-九点标定";
+
         
         SwitchProject(cali, HalconPorjects.NinePointCalibration);
     }
@@ -150,7 +148,7 @@ public partial class Main : Form
         if (_window == null) return;
         var m = new MeasureDimensions(_window);
         groupBox3.Text = @"项目-尺寸测量";
-
+        
         SwitchProject(m, HalconPorjects.MeasureDimension);
     }
 
@@ -161,6 +159,7 @@ public partial class Main : Form
         {
             // 切换项目时，销毁上一个
             _currentProject.Item2?.Dispose();
+            
             control.Parent = panel2;
             control.Dock = DockStyle.Fill;
 

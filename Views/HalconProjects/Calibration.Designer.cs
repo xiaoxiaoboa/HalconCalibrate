@@ -31,11 +31,11 @@ partial class Calibration
     /// </summary>
     private void InitializeComponent()
     {
-        panel1 = new Panel();
-        tableLayoutPanel1 = new TableLayoutPanel();
-        thresholdBtn = new Button();
-        start = new Button();
-        stopListen = new Button();
+        panel1 = new System.Windows.Forms.Panel();
+        tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+        thresholdBtn = new System.Windows.Forms.Button();
+        start = new System.Windows.Forms.Button();
+        stopListen = new System.Windows.Forms.Button();
         panel1.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         SuspendLayout();
@@ -43,36 +43,36 @@ partial class Calibration
         // panel1
         // 
         panel1.Controls.Add(tableLayoutPanel1);
-        panel1.Dock = DockStyle.Fill;
-        panel1.Location = new Point(0, 0);
+        panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+        panel1.Location = new System.Drawing.Point(0, 0);
         panel1.Name = "panel1";
-        panel1.Size = new Size(312, 371);
+        panel1.Size = new System.Drawing.Size(312, 371);
         panel1.TabIndex = 0;
         // 
         // tableLayoutPanel1
         // 
         tableLayoutPanel1.ColumnCount = 2;
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+        tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
         tableLayoutPanel1.Controls.Add(thresholdBtn, 0, 0);
         tableLayoutPanel1.Controls.Add(start, 1, 0);
         tableLayoutPanel1.Controls.Add(stopListen, 0, 1);
-        tableLayoutPanel1.Dock = DockStyle.Fill;
-        tableLayoutPanel1.Location = new Point(0, 0);
+        tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+        tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
         tableLayoutPanel1.RowCount = 3;
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 60F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 85F));
-        tableLayoutPanel1.Size = new Size(312, 371);
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+        tableLayoutPanel1.Size = new System.Drawing.Size(312, 371);
         tableLayoutPanel1.TabIndex = 0;
         // 
         // thresholdBtn
         // 
-        thresholdBtn.Dock = DockStyle.Fill;
-        thresholdBtn.Location = new Point(3, 3);
+        thresholdBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+        thresholdBtn.Location = new System.Drawing.Point(3, 3);
         thresholdBtn.Name = "thresholdBtn";
-        thresholdBtn.Size = new Size(150, 54);
+        thresholdBtn.Size = new System.Drawing.Size(150, 54);
         thresholdBtn.TabIndex = 0;
         thresholdBtn.Text = "阈值分割";
         thresholdBtn.UseVisualStyleBackColor = true;
@@ -80,10 +80,10 @@ partial class Calibration
         // 
         // start
         // 
-        start.Dock = DockStyle.Fill;
-        start.Location = new Point(159, 3);
+        start.Dock = System.Windows.Forms.DockStyle.Fill;
+        start.Location = new System.Drawing.Point(159, 3);
         start.Name = "start";
-        start.Size = new Size(150, 54);
+        start.Size = new System.Drawing.Size(150, 54);
         start.TabIndex = 1;
         start.Text = "启动标定";
         start.UseVisualStyleBackColor = true;
@@ -91,10 +91,10 @@ partial class Calibration
         // 
         // stopListen
         // 
-        stopListen.Dock = DockStyle.Fill;
-        stopListen.Location = new Point(3, 63);
+        stopListen.Dock = System.Windows.Forms.DockStyle.Fill;
+        stopListen.Location = new System.Drawing.Point(3, 63);
         stopListen.Name = "stopListen";
-        stopListen.Size = new Size(150, 54);
+        stopListen.Size = new System.Drawing.Size(150, 54);
         stopListen.TabIndex = 2;
         stopListen.Text = "停止监听";
         stopListen.UseVisualStyleBackColor = true;
@@ -102,11 +102,10 @@ partial class Calibration
         // 
         // Calibration
         // 
-        AutoScaleDimensions = new SizeF(9F, 20F);
-        AutoScaleMode = AutoScaleMode.Font;
+        AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         Controls.Add(panel1);
-        Name = "Calibration";
-        Size = new Size(312, 371);
+        Size = new System.Drawing.Size(312, 371);
         panel1.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);
         ResumeLayout(false);

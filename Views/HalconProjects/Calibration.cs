@@ -29,6 +29,7 @@ public partial class Calibration : UserControl
         InitializeComponent();
 
         _window = hWindow;
+        Disposed += FormClosing;
     }
 
     // 恢复控件到UI线程执行
@@ -153,7 +154,7 @@ public partial class Calibration : UserControl
                 // 保存物理坐标
                 _realRow.Append(x);
                 _realColumn.Append(y);
-                
+
                 // 读取到数据后执行拍照
                 CameraCtrl.Instance.Capture();
             }
@@ -178,5 +179,10 @@ public partial class Calibration : UserControl
         {
             _threshold.Close();
         }
+    }
+
+    private void FormClosing(object? sender, EventArgs e)
+    {
+        _threshold?.Dispose();
     }
 }

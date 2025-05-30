@@ -17,6 +17,8 @@ public partial class MeasureDimensions : UserControl
     {
         _window = hWindow;
         InitializeComponent();
+
+        Disposed += FormClosing;
     }
 
     // 恢复控件到UI线程执行
@@ -66,5 +68,10 @@ public partial class MeasureDimensions : UserControl
         {
             _config.Close();
         }
+    }
+
+    private void FormClosing(object? sender, EventArgs e)
+    {
+        _threshold?.Dispose();
     }
 }
