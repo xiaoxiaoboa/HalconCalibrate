@@ -5,19 +5,19 @@ using HalconDotNet;
 
 namespace HalconCalibration.Views.HalconProjects.MeasureDimensions;
 
-public partial class Config : Form
-{
+public partial class Config : Form {
     private HWindow? _window;
-    private string InterpolationValue { get; set; } = nameof(Interpolation.nearest_neighbor);
-    private double Sigma { get; set; } = 1;
-    private int Threshold { get; set; } = 30;
-    private string TransitionValue { get; set; } = nameof(Transition.all);
-    private string SelectValue { get; set; } = nameof(Enums.Select.all);
+    private string InterpolationValue{ get; set; } = nameof(Interpolation.nearest_neighbor);
+    private double Sigma{ get; set; } = 1;
+    private int Threshold{ get; set; } = 30;
+    private string TransitionValue{ get; set; } = nameof(Transition.all);
+    private string SelectValue{ get; set; } = nameof(Enums.Select.all);
+
+    private bool RadioX{ get; set; }
+    private bool RadioY{ get; set; }
 
 
-    
-    public Config(HWindow hWindow)
-    {
+    public Config(HWindow? hWindow) {
         InitializeComponent();
         _window = hWindow;
 
@@ -31,10 +31,14 @@ public partial class Config : Form
         selectCombobox.Text = SelectValue;
         sigma.Text = Sigma.ToString(CultureInfo.CurrentCulture);
         threshold.Text = Threshold.ToString();
+
+        checkBox1.Checked = true;
+        checkBox2.Checked = true;
+        
     }
 
-    public void Measure(double extraAngle, double extraLength1, double extraLength2)
-    {
+    // 测量算法
+    public void Measure(double extraAngle, double extraLength1, double extraLength2) {
         if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
 
         // 需要创建一个新region，不然每次执行，region会被GenContourPolygonXld修改
@@ -67,11 +71,8 @@ public partial class Config : Form
         HTuple qx1 = CameraCtrl.Instance.HomMat2D.AffineTransPoint2d(rowEdgeFirst, columnEdgeFirst, out HTuple qy1);
         HTuple qx2 = CameraCtrl.Instance.HomMat2D.AffineTransPoint2d(rowEdgeSecond, columnEdgeSecond, out HTuple qy2);
         // 计算
-        for (int i = 0; i < qx1.Length; i++)
-        {
-            Logger.Instance.AddLog($"x1:{qx1[i].D}, y1:{qy1[i].D}, x2:{qx2[i].D}, y2:{qy2[i].D}");
+        for (int i = 0; i < qx1.Length; i++) {
             var dis = HMisc.DistancePp(qx1[i].D, qy1[i].D, qx2[i].D, qy2[i].D);
-            Logger.Instance.AddLog($"第{i + 1}组尺寸：{dis}");
         }
 
 
@@ -87,10 +88,8 @@ public partial class Config : Form
     }
 
     // 生成边缘对算法
-    private void GenEdgePair(int count, HTuple rowEdge, HTuple columnEdge, HTuple radian, double radius)
-    {
-        for (int i = 0; i < count; i++)
-        {
+    private void GenEdgePair(int count, HTuple rowEdge, HTuple columnEdge, HTuple radian, double radius) {
+        for (int i = 0; i < count; i++) {
             double rowStart = rowEdge[i] + radius * Math.Cos(radian);
             double rowEnd = rowEdge[i] - radius * Math.Cos(radian);
             double columnStart = columnEdge[i] + radius * Math.Sin(radian);
@@ -113,70 +112,69 @@ public partial class Config : Form
         }
     }
 
-    private void applyBtn_Click(object sender, EventArgs e)
-    {
-        Measure(90, 1.5, 0.5);
-        Measure(0,1.5,0.5);
+    // 运行算法
+    private void applyBtn_Click(object sender, EventArgs e) {
+        if (RadioX) {
+            // X轴方向测量
+            Measure(0, 1.5, 0.5);
+        }
+
+        if (RadioY) {
+            // Y轴方向测量 
+            Measure(90, 1.5, 0.5);
+        }
     }
 
-    private void resetBtn_Click(object sender, EventArgs e)
-    {
-        throw new System.NotImplementedException();
-    }
+    private void resetBtn_Click(object sender, EventArgs e) { }
 
 
-    private void sigma_TextChanged(object sender, EventArgs e)
-    {
-        if (double.TryParse(sigma.Text, out double result))
-        {
+    private void sigma_TextChanged(object sender, EventArgs e) {
+        if (double.TryParse(sigma.Text, out double result)) {
             Sigma = result;
         }
     }
 
-    private void threshold_TextChanged(object sender, EventArgs e)
-    {
-        if (int.TryParse(threshold.Text, out int result))
-        {
+    private void threshold_TextChanged(object sender, EventArgs e) {
+        if (int.TryParse(threshold.Text, out int result)) {
             Threshold = result;
         }
     }
 
-    private void interpolationCombobox_SelectionChangeCommitted(object sender, EventArgs e)
-    {
+    private void interpolationCombobox_SelectionChangeCommitted(object sender, EventArgs e) {
         var item = interpolationCombobox.SelectedItem;
-        if (item is string s)
-        {
+        if (item is string s) {
             InterpolationValue = s;
         }
-        else
-        {
+        else {
             MessageBox.Show(@"选择项时出错！");
         }
     }
 
-    private void transitionCombobx_SelectionChangeCommitted(object sender, EventArgs e)
-    {
+    private void transitionCombobx_SelectionChangeCommitted(object sender, EventArgs e) {
         var item = transitionCombobx.SelectedItem;
-        if (item is string s)
-        {
+        if (item is string s) {
             TransitionValue = s;
         }
-        else
-        {
+        else {
             MessageBox.Show(@"选择项时出错！");
         }
     }
 
-    private void selectCombobox_SelectionChangeCommitted(object sender, EventArgs e)
-    {
+    private void selectCombobox_SelectionChangeCommitted(object sender, EventArgs e) {
         var item = selectCombobox.SelectedItem;
-        if (item is string s)
-        {
+        if (item is string s) {
             SelectValue = s;
         }
-        else
-        {
+        else {
             MessageBox.Show(@"选择项时出错！");
         }
+    }
+
+    private void checkBox1_CheckedChanged(object sender, EventArgs e) {
+        RadioX = checkBox1.Checked;
+    }
+
+    private void checkBox2_CheckedChanged(object sender, EventArgs e) {
+        RadioY = checkBox2.Checked;
     }
 }

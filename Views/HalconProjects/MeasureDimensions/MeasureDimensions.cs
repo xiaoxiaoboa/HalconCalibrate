@@ -4,8 +4,7 @@ using HalconDotNet;
 namespace HalconCalibration.Views.HalconProjects.MeasureDimensions;
 
 [ToolboxItem(false)]
-public partial class MeasureDimensions : UserControl
-{
+public partial class MeasureDimensions : UserControl {
     private HWindow? _window;
 
     // 窗口
@@ -13,8 +12,7 @@ public partial class MeasureDimensions : UserControl
     private Config? _config;
 
 
-    public MeasureDimensions(HWindow hWindow)
-    {
+    public MeasureDimensions(HWindow hWindow) {
         _window = hWindow;
         InitializeComponent();
 
@@ -22,56 +20,38 @@ public partial class MeasureDimensions : UserControl
     }
 
     // 恢复控件到UI线程执行
-    private void RunOnUIThread(Action action)
-    {
-        if (InvokeRequired)
-        {
+    private void RunOnUIThread(Action action) {
+        if (InvokeRequired) {
             Invoke(action);
         }
-        else
-        {
+        else {
             action();
         }
     }
 
     // 打开阈值分割窗口
-    private void threshold_Click(object sender, EventArgs e)
-    {
-        if (_threshold == null || _threshold.IsDisposed)
-        {
-            if (_window == null) return;
+    private void threshold_Click(object sender, EventArgs e) {
+        if (_threshold == null || _threshold.IsDisposed) {
             _threshold = new Threshold(_window);
             _threshold.Show();
         }
-        else
-        {
+        else {
             _threshold.Close();
         }
     }
 
     // 打开项目配置窗口
-    private void config_Click(object sender, EventArgs e)
-    {
-        if (_config == null || _config.IsDisposed)
-        {
-            if (_window == null)
-            {
-                MessageBox.Show(@"先阈值分割");
-            }
-            else
-            {
-                _config = new Config(_window);
-                _config.Show();
-            }
+    private void config_Click(object sender, EventArgs e) {
+        if (_config == null || _config.IsDisposed) {
+            _config = new Config(_window);
+            _config.Show();
         }
-        else
-        {
+        else {
             _config.Close();
         }
     }
 
-    private void FormClosing(object? sender, EventArgs e)
-    {
+    private void FormClosing(object? sender, EventArgs e) {
         _threshold?.Dispose();
     }
 }

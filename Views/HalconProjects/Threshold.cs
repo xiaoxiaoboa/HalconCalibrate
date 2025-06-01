@@ -9,7 +9,7 @@ public partial class Threshold : Form {
     private HWindow? _window;
 
 
-    public Threshold(HWindow hWindow) {
+    public Threshold(HWindow? hWindow) {
         InitializeComponent();
 
         _window = hWindow;
@@ -36,44 +36,49 @@ public partial class Threshold : Form {
         }
     }
 
-    // 阈值分割
-    public (HTuple, HTuple) HandleThreshold() {
-        try {
-            if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
-
-            // 转灰度图
-            HImage grayImage = CameraCtrl.Instance.Image.Rgb1ToGray();
-            // 阈值分割
-            HRegion thresholdRegion =
-                grayImage.Threshold(ThresholdCtrl.Instance.ThresholdMin, ThresholdCtrl.Instance.ThresholdMax);
-            // 连通
-            HRegion connectionRegion = thresholdRegion.Connection();
-            // 形状过滤
-            HRegion selectRegion = connectionRegion.SelectShape(ThresholdCtrl.Instance.Feature,
-                ThresholdCtrl.Instance.Operator, ThresholdCtrl.Instance.SelectShapeMin,
-                ThresholdCtrl.Instance.SelectShapeMax);
-            // 中心点和面积
-            ThresholdCtrl.Instance.Area = selectRegion.AreaCenter(out HTuple row, out HTuple column);
-            ThresholdCtrl.Instance.RegionValue = selectRegion;
-
-
-            // 图像加载到控件
-            _window?.ClearWindow();
-            grayImage.DispObj(_window);
-            selectRegion.DispObj(_window);
-            return (row, column);
-        }
-        catch (Exception exception) {
-            RunOnUIThread(() => Logger.Instance.AddLog($"图像处理操作失败：{exception.Message}", LogLevel.Error));
-            MessageBox.Show($@"图像处理操作失败：{exception.Message}");
-        }
-
-        return (new HTuple(), new HTuple());
-    }
+    // // 阈值分割
+    // public (HTuple, HTuple) HandleThreshold() {
+    //     try {
+    //         if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");
+    //
+    //         // 转灰度图
+    //         HImage grayImage = CameraCtrl.Instance.Image.Rgb1ToGray();
+    //         // 阈值分割
+    //         HRegion thresholdRegion =
+    //             grayImage.Threshold(ThresholdCtrl.Instance.ThresholdMin, ThresholdCtrl.Instance.ThresholdMax);
+    //         // 连通
+    //         HRegion connectionRegion = thresholdRegion.Connection();
+    //         // 形状过滤
+    //         HRegion selectRegion = connectionRegion.SelectShape(ThresholdCtrl.Instance.Feature,
+    //             ThresholdCtrl.Instance.Operator, ThresholdCtrl.Instance.SelectShapeMin,
+    //             ThresholdCtrl.Instance.SelectShapeMax);
+    //         // 中心点和面积
+    //         ThresholdCtrl.Instance.Area = selectRegion.AreaCenter(out HTuple row, out HTuple column);
+    //         ThresholdCtrl.Instance.RegionValue = selectRegion;
+    //
+    //
+    //         // 图像加载到控件
+    //         _window?.ClearWindow();
+    //         grayImage.DispObj(_window);
+    //         selectRegion.DispObj(_window);
+    //         return (row, column);
+    //     }
+    //     catch (Exception exception) {
+    //         RunOnUIThread(() => Logger.Instance.AddLog($"图像处理操作失败：{exception.Message}", LogLevel.Error));
+    //         MessageBox.Show($@"图像处理操作失败：{exception.Message}");
+    //     }
+    //
+    //     return (new HTuple(), new HTuple());
+    // }
 
     // 应用
     private void applyBtn_Click(object sender, EventArgs e) {
-        HandleThreshold();
+        // HandleThreshold();
+        if (!ThresholdCtrl.Instance.HandleThreshold(_window, out var msg)) {
+            Logger.Instance.AddLog($"阈值分割失败请重试：{msg}");
+            MessageBox.Show(@$"阈值分割失败请重试：{msg}");
+        }
+        
     }
 
     private void resetBtn_Click(object sender, EventArgs e) {

@@ -13,7 +13,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="ini-parser" Version="2.5.2" />
         <PackageReference Include="ini-parser-netstandard" Version="2.5.3" />
         <PackageReference Include="MVTec.HalconDotNet-Windows" Version="24111.0.0" />
         <PackageReference Include="S7netplus" Version="0.20.0" />
@@ -33,6 +32,12 @@
           <SubType>UserControl</SubType>
         </Compile>
         <Compile Update="Views\HalconProjects\MeasureDimensions\Config.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\CameraConfig.cs">
+          <SubType>Form</SubType>
+        </Compile>
+        <Compile Update="Views\PlcConfig.cs">
           <SubType>Form</SubType>
         </Compile>
     </ItemGroup>
