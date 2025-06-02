@@ -23,6 +23,12 @@ public class ThresholdCtrl {
     public HTuple? Area{ get; set; }
 
     // 阈值分割
+    /// <summary>
+    /// 阈值分割图像处理函数
+    /// </summary>
+    /// <param name="window">Halcon窗口对象</param>
+    /// <param name="errorMsg">错误信息</param>
+    /// <returns>处理是否成功</returns>
     public bool HandleThreshold(HWindow? window, out string? errorMsg) {
         try {
             if (CameraCtrl.Instance.Image == null) throw new Exception("图像未加载");

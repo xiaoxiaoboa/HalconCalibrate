@@ -29,8 +29,7 @@ partial class Threshold
     /// Required method for Designer support - do not modify
     /// the contents of this method with the code editor.
     /// </summary>
-    private void InitializeComponent()
-    {
+    private void InitializeComponent() {
         panel1 = new System.Windows.Forms.Panel();
         tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
         groupBox1 = new System.Windows.Forms.GroupBox();
@@ -275,7 +274,8 @@ partial class Threshold
         ClientSize = new System.Drawing.Size(293, 417);
         Controls.Add(panel1);
         MaximizeBox = false;
-        MinimumSize = new System.Drawing.Size(311, 416);
+        MaximumSize = new System.Drawing.Size(311, 464);
+        MinimumSize = new System.Drawing.Size(311, 0);
         Text = "Threshold";
         panel1.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);

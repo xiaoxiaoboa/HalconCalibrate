@@ -29,13 +29,12 @@ partial class MeasureDimensions
     /// Required method for Designer support - do not modify
     /// the contents of this method with the code editor.
     /// </summary>
-    private void InitializeComponent()
-    {
-        panel1 = new Panel();
-        tableLayoutPanel1 = new TableLayoutPanel();
-        tableLayoutPanel2 = new TableLayoutPanel();
-        config = new Button();
-        threshold = new Button();
+    private void InitializeComponent() {
+        panel1 = new System.Windows.Forms.Panel();
+        tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+        tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+        measure = new System.Windows.Forms.Button();
+        threshold = new System.Windows.Forms.Button();
         panel1.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         tableLayoutPanel2.SuspendLayout();
@@ -44,59 +43,59 @@ partial class MeasureDimensions
         // panel1
         // 
         panel1.Controls.Add(tableLayoutPanel1);
-        panel1.Dock = DockStyle.Fill;
-        panel1.Location = new Point(0, 0);
+        panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+        panel1.Location = new System.Drawing.Point(0, 0);
         panel1.Name = "panel1";
-        panel1.Size = new Size(312, 371);
+        panel1.Size = new System.Drawing.Size(312, 371);
         panel1.TabIndex = 0;
         // 
         // tableLayoutPanel1
         // 
         tableLayoutPanel1.ColumnCount = 1;
-        tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+        tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 0);
-        tableLayoutPanel1.Dock = DockStyle.Fill;
-        tableLayoutPanel1.Location = new Point(0, 0);
+        tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+        tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
         tableLayoutPanel1.RowCount = 2;
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 62F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 66F));
-        tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-        tableLayoutPanel1.Size = new Size(312, 371);
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 66F));
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+        tableLayoutPanel1.Size = new System.Drawing.Size(312, 371);
         tableLayoutPanel1.TabIndex = 0;
         // 
         // tableLayoutPanel2
         // 
         tableLayoutPanel2.ColumnCount = 2;
-        tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-        tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-        tableLayoutPanel2.Controls.Add(config, 1, 0);
+        tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel2.Controls.Add(measure, 1, 0);
         tableLayoutPanel2.Controls.Add(threshold, 0, 0);
-        tableLayoutPanel2.Dock = DockStyle.Fill;
-        tableLayoutPanel2.Location = new Point(3, 3);
+        tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+        tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
         tableLayoutPanel2.Name = "tableLayoutPanel2";
         tableLayoutPanel2.RowCount = 1;
-        tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-        tableLayoutPanel2.Size = new Size(306, 56);
+        tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel2.Size = new System.Drawing.Size(306, 56);
         tableLayoutPanel2.TabIndex = 3;
         // 
-        // config
+        // measure
         // 
-        config.Dock = DockStyle.Fill;
-        config.Location = new Point(156, 3);
-        config.Name = "config";
-        config.Size = new Size(147, 50);
-        config.TabIndex = 1;
-        config.Text = "配置";
-        config.UseVisualStyleBackColor = true;
-        config.Click += config_Click;
+        measure.Dock = System.Windows.Forms.DockStyle.Fill;
+        measure.Location = new System.Drawing.Point(156, 3);
+        measure.Name = "measure";
+        measure.Size = new System.Drawing.Size(147, 50);
+        measure.TabIndex = 1;
+        measure.Text = "测量";
+        measure.UseVisualStyleBackColor = true;
+        measure.Click += measure_Click;
         // 
         // threshold
         // 
-        threshold.Dock = DockStyle.Fill;
-        threshold.Location = new Point(3, 3);
+        threshold.Dock = System.Windows.Forms.DockStyle.Fill;
+        threshold.Location = new System.Drawing.Point(3, 3);
         threshold.Name = "threshold";
-        threshold.Size = new Size(147, 50);
+        threshold.Size = new System.Drawing.Size(147, 50);
         threshold.TabIndex = 0;
         threshold.Text = "阈值分割";
         threshold.UseVisualStyleBackColor = true;
@@ -104,11 +103,10 @@ partial class MeasureDimensions
         // 
         // MeasureDimensions
         // 
-        AutoScaleDimensions = new SizeF(9F, 20F);
-        AutoScaleMode = AutoScaleMode.Font;
+        AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+        AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         Controls.Add(panel1);
-        Name = "MeasureDimensions";
-        Size = new Size(312, 371);
+        Size = new System.Drawing.Size(312, 371);
         panel1.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);
         tableLayoutPanel2.ResumeLayout(false);
@@ -118,7 +116,7 @@ partial class MeasureDimensions
     private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
 
     private System.Windows.Forms.Button threshold;
-    private System.Windows.Forms.Button config;
+    private System.Windows.Forms.Button measure;
 
     private System.Windows.Forms.Panel panel1;
 

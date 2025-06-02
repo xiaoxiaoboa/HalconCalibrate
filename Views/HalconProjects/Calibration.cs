@@ -15,12 +15,12 @@ public partial class Calibration : UserControl {
     private Threshold? _threshold;
 
     // 像素坐标的元组。 
-    private readonly HTuple _pixelRow = new();
-    private readonly HTuple _pixelColumn = new();
+    private HTuple _pixelRow = new();
+    private HTuple _pixelColumn = new();
 
     // 机械坐标数组；按照九点标定顺序一次添加
-    private readonly HTuple _realRow = new();
-    private readonly HTuple _realColumn = new();
+    private HTuple _realRow = new();
+    private HTuple _realColumn = new();
 
 
     public Calibration(HWindow hWindow) {
@@ -81,10 +81,16 @@ public partial class Calibration : UserControl {
                 // 点对仿射
                 CameraCtrl.Instance.HomMat2D.VectorToHomMat2d(_pixelRow, _pixelColumn, _realRow, _realColumn);
 
+                _pixelRow = new HTuple();
+                _pixelColumn = new HTuple();
+                _realRow = new HTuple();
+                _realColumn = new HTuple();
+
                 // 停止监听
                 RunOnUIThread(() => {
                     stopListen_Click(sender, e);
                     Logger.Instance.AddLog("九点标定完成");
+                    Logger.Instance.AddLog("点对已清空");
                 });
 
                 // 恢复默认
@@ -107,10 +113,10 @@ public partial class Calibration : UserControl {
     /// 6：测试：输入像素坐标，使用仿射矩阵 求对应的机械坐标
     private void listenPlc_Click(object sender, EventArgs e) {
         try {
-            if (PlcControl.Instance.IsConnected) {
-                Logger.Instance.AddLog("监听已启动");
-                return;
-            }
+            // if (PlcControl.Instance.) {
+            //     Logger.Instance.AddLog("监听已启动");
+            //     return;
+            // }
 
             // 监听进行第几次九点标定，触发拍照，记录机械坐标位置
             PlcControl.Instance.StartListener(1000, OnPlcListening);

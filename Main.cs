@@ -194,4 +194,9 @@ public partial class Main : Form {
         var pc = new PlcConfig();
         pc.Show();
     }
+
+    // 清除图像
+    private void clearImage_Click(object sender, EventArgs e) {
+        _window?.ClearWindow();
+    }
 }

@@ -44,18 +44,14 @@ partial class Config
         label4 = new System.Windows.Forms.Label();
         label3 = new System.Windows.Forms.Label();
         threshold = new System.Windows.Forms.TextBox();
-        tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-        applyBtn = new System.Windows.Forms.Button();
+        tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
         resetBtn = new System.Windows.Forms.Button();
-        groupBox2 = new System.Windows.Forms.GroupBox();
-        checkBox2 = new System.Windows.Forms.CheckBox();
-        checkBox1 = new System.Windows.Forms.CheckBox();
+        applyBtn = new System.Windows.Forms.Button();
         panel1.SuspendLayout();
         tableLayoutPanel1.SuspendLayout();
         panel2.SuspendLayout();
         groupBox1.SuspendLayout();
-        tableLayoutPanel2.SuspendLayout();
-        groupBox2.SuspendLayout();
+        tableLayoutPanel3.SuspendLayout();
         SuspendLayout();
         // 
         // panel1
@@ -64,7 +60,7 @@ partial class Config
         panel1.Dock = System.Windows.Forms.DockStyle.Fill;
         panel1.Location = new System.Drawing.Point(0, 0);
         panel1.Name = "panel1";
-        panel1.Size = new System.Drawing.Size(304, 413);
+        panel1.Size = new System.Drawing.Size(304, 367);
         panel1.TabIndex = 0;
         // 
         // tableLayoutPanel1
@@ -72,16 +68,16 @@ partial class Config
         tableLayoutPanel1.ColumnCount = 1;
         tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
         tableLayoutPanel1.Controls.Add(panel2, 0, 0);
-        tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 2);
-        tableLayoutPanel1.Controls.Add(groupBox2, 0, 1);
+        tableLayoutPanel1.Controls.Add(tableLayoutPanel3, 0, 1);
         tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
         tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
-        tableLayoutPanel1.RowCount = 3;
-        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 284F));
-        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 70F));
-        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 97F));
-        tableLayoutPanel1.Size = new System.Drawing.Size(304, 413);
+        tableLayoutPanel1.RowCount = 2;
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 291F));
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 79F));
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+        tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+        tableLayoutPanel1.Size = new System.Drawing.Size(304, 367);
         tableLayoutPanel1.TabIndex = 0;
         // 
         // panel2
@@ -90,7 +86,7 @@ partial class Config
         panel2.Dock = System.Windows.Forms.DockStyle.Fill;
         panel2.Location = new System.Drawing.Point(3, 3);
         panel2.Name = "panel2";
-        panel2.Size = new System.Drawing.Size(298, 278);
+        panel2.Size = new System.Drawing.Size(298, 285);
         panel2.TabIndex = 0;
         // 
         // groupBox1
@@ -108,7 +104,7 @@ partial class Config
         groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
         groupBox1.Location = new System.Drawing.Point(0, 0);
         groupBox1.Name = "groupBox1";
-        groupBox1.Size = new System.Drawing.Size(298, 278);
+        groupBox1.Size = new System.Drawing.Size(298, 285);
         groupBox1.TabIndex = 3;
         groupBox1.TabStop = false;
         groupBox1.Text = "算子参数";
@@ -201,96 +197,59 @@ partial class Config
         threshold.TabIndex = 1;
         threshold.TextChanged += threshold_TextChanged;
         // 
-        // tableLayoutPanel2
+        // tableLayoutPanel3
         // 
-        tableLayoutPanel2.ColumnCount = 2;
-        tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel2.Controls.Add(applyBtn, 0, 0);
-        tableLayoutPanel2.Controls.Add(resetBtn, 1, 0);
-        tableLayoutPanel2.Location = new System.Drawing.Point(3, 357);
-        tableLayoutPanel2.Name = "tableLayoutPanel2";
-        tableLayoutPanel2.RowCount = 1;
-        tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-        tableLayoutPanel2.Size = new System.Drawing.Size(298, 54);
-        tableLayoutPanel2.TabIndex = 1;
+        tableLayoutPanel3.ColumnCount = 2;
+        tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 49.66443F));
+        tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.33557F));
+        tableLayoutPanel3.Controls.Add(resetBtn, 1, 0);
+        tableLayoutPanel3.Controls.Add(applyBtn, 0, 0);
+        tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+        tableLayoutPanel3.Location = new System.Drawing.Point(3, 294);
+        tableLayoutPanel3.Name = "tableLayoutPanel3";
+        tableLayoutPanel3.RowCount = 1;
+        tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+        tableLayoutPanel3.Size = new System.Drawing.Size(298, 73);
+        tableLayoutPanel3.TabIndex = 2;
+        // 
+        // resetBtn
+        // 
+        resetBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+        resetBtn.Location = new System.Drawing.Point(151, 3);
+        resetBtn.Name = "resetBtn";
+        resetBtn.Size = new System.Drawing.Size(144, 67);
+        resetBtn.TabIndex = 1;
+        resetBtn.Text = "重置";
+        resetBtn.UseVisualStyleBackColor = true;
+        resetBtn.Click += resetBtn_Click;
         // 
         // applyBtn
         // 
         applyBtn.Dock = System.Windows.Forms.DockStyle.Fill;
         applyBtn.Location = new System.Drawing.Point(3, 3);
         applyBtn.Name = "applyBtn";
-        applyBtn.Size = new System.Drawing.Size(143, 48);
+        applyBtn.Size = new System.Drawing.Size(142, 67);
         applyBtn.TabIndex = 0;
         applyBtn.Text = "应用";
         applyBtn.UseVisualStyleBackColor = true;
         applyBtn.Click += applyBtn_Click;
         // 
-        // resetBtn
-        // 
-        resetBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-        resetBtn.Location = new System.Drawing.Point(152, 3);
-        resetBtn.Name = "resetBtn";
-        resetBtn.Size = new System.Drawing.Size(143, 48);
-        resetBtn.TabIndex = 1;
-        resetBtn.Text = "重置";
-        resetBtn.UseVisualStyleBackColor = true;
-        resetBtn.Click += resetBtn_Click;
-        // 
-        // groupBox2
-        // 
-        groupBox2.Controls.Add(checkBox2);
-        groupBox2.Controls.Add(checkBox1);
-        groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-        groupBox2.Location = new System.Drawing.Point(3, 287);
-        groupBox2.Name = "groupBox2";
-        groupBox2.Size = new System.Drawing.Size(298, 64);
-        groupBox2.TabIndex = 2;
-        groupBox2.TabStop = false;
-        groupBox2.Text = "测量方向";
-        // 
-        // checkBox2
-        // 
-        checkBox2.Location = new System.Drawing.Point(172, 26);
-        checkBox2.Name = "checkBox2";
-        checkBox2.Size = new System.Drawing.Size(60, 26);
-        checkBox2.TabIndex = 1;
-        checkBox2.Text = "Y轴";
-        checkBox2.UseVisualStyleBackColor = true;
-        checkBox2.CheckedChanged += checkBox2_CheckedChanged;
-        // 
-        // checkBox1
-        // 
-        checkBox1.Location = new System.Drawing.Point(80, 26);
-        checkBox1.Name = "checkBox1";
-        checkBox1.Size = new System.Drawing.Size(61, 26);
-        checkBox1.TabIndex = 0;
-        checkBox1.Text = "X轴";
-        checkBox1.UseVisualStyleBackColor = true;
-        checkBox1.CheckedChanged += checkBox1_CheckedChanged;
-        // 
         // Config
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(304, 413);
+        ClientSize = new System.Drawing.Size(304, 367);
         Controls.Add(panel1);
         MaximizeBox = false;
-        MaximumSize = new System.Drawing.Size(322, 460);
-        MinimumSize = new System.Drawing.Size(322, 374);
         Text = "Config";
         panel1.ResumeLayout(false);
         tableLayoutPanel1.ResumeLayout(false);
         panel2.ResumeLayout(false);
         groupBox1.ResumeLayout(false);
         groupBox1.PerformLayout();
-        tableLayoutPanel2.ResumeLayout(false);
-        groupBox2.ResumeLayout(false);
+        tableLayoutPanel3.ResumeLayout(false);
         ResumeLayout(false);
     }
-
-    private System.Windows.Forms.CheckBox checkBox1;
-    private System.Windows.Forms.CheckBox checkBox2;
 
     private System.Windows.Forms.ComboBox selectCombobox;
 
@@ -309,9 +268,8 @@ partial class Config
     private Label label3;
     private Label label4;
     private Label label5;
-    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     private System.Windows.Forms.Button applyBtn;
     private System.Windows.Forms.Button resetBtn;
     private System.Windows.Forms.GroupBox groupBox1;
-    private System.Windows.Forms.GroupBox groupBox2;
+    private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
 }

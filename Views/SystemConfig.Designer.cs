@@ -168,6 +168,8 @@ namespace HalconCalibration.Views {
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             MaximizeBox = false;
+            MaximumSize = new System.Drawing.Size(639, 285);
+            MinimumSize = new System.Drawing.Size(0, 285);
             StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             Text = "PclConfig";
             FormClosing += SystemConfig_FormClosing;

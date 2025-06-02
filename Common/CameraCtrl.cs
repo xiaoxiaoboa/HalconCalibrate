@@ -14,25 +14,24 @@ public class CameraCtrl {
     // 相机标定仿射关系
     public readonly HHomMat2D HomMat2D = new();
 
-    public string Name{ get; set; } = "GigEVision2";
+    public string Name{ get; set; }
     public int HorizontalResolution{ get; set; }
     public int VerticalResolution{ get; set; }
     public int ImageWidth{ get; set; }
     public int ImageHeight{ get; set; }
     public int StartRow{ get; set; }
     public int StartColumn{ get; set; }
-    public string Field{ get; set; } = "progressive";
-    public int BitsPerChannel{ get; set; } = -1;
-    public string ColorSpace{ get; set; } = "default";
-    public double Generic{ get; set; } = -1;
-    public string ExternalTrigger{ get; set; } = "false";
+    public string Field{ get; set; }
+    public int BitsPerChannel{ get; set; }
+    public string ColorSpace{ get; set; }
+    public double Generic{ get; set; }
+    public string ExternalTrigger{ get; set; }
 
-    public string CameraType{ get; set; } = "default";
+    public string CameraType{ get; set; }
 
-    // public string Device { get; set; } = "34bd2022f532_Hikrobot_MVCS06010GC";
-    public string Device{ get; set; } = "34bd202ffa29_Hikrobot_MVCS06010GC";
+    public string Device { get; set; }
     public int Port{ get; set; }
-    public int LineIn{ get; set; } = -1;
+    public int LineIn{ get; set; }
 
     public event EventHandler? CapturedCompleted;
 

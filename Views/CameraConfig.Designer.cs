@@ -443,6 +443,9 @@ partial class CameraConfig {
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         ClientSize = new System.Drawing.Size(1184, 319);
         Controls.Add(panel1);
+        MaximizeBox = false;
+        MaximumSize = new System.Drawing.Size(1202, 366);
+        MinimumSize = new System.Drawing.Size(1202, 0);
         StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "CameraConfig";
         FormClosing += CameraConfig_FormClosing;

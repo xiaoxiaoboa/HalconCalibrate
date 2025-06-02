@@ -45,7 +45,7 @@ partial class PlcConfig {
         panel1.Dock = System.Windows.Forms.DockStyle.Fill;
         panel1.Location = new System.Drawing.Point(0, 0);
         panel1.Name = "panel1";
-        panel1.Size = new System.Drawing.Size(424, 112);
+        panel1.Size = new System.Drawing.Size(404, 112);
         panel1.TabIndex = 0;
         // 
         // groupBox1
@@ -55,7 +55,7 @@ partial class PlcConfig {
         groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
         groupBox1.Location = new System.Drawing.Point(0, 0);
         groupBox1.Name = "groupBox1";
-        groupBox1.Size = new System.Drawing.Size(424, 112);
+        groupBox1.Size = new System.Drawing.Size(404, 112);
         groupBox1.TabIndex = 0;
         groupBox1.TabStop = false;
         groupBox1.Text = "PLC配置";
@@ -102,8 +102,11 @@ partial class PlcConfig {
         // 
         AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
         AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        ClientSize = new System.Drawing.Size(424, 112);
+        ClientSize = new System.Drawing.Size(404, 112);
         Controls.Add(panel1);
+        MaximizeBox = false;
+        MaximumSize = new System.Drawing.Size(422, 159);
+        MinimumSize = new System.Drawing.Size(422, 0);
         StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
         Text = "PlcConfig";
         FormClosing += PlcConfig_FormClosing;
